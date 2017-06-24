@@ -149,10 +149,52 @@ def getJson(nickname, mode, token):
                         thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'])+'l.jpg', title=username+' - '+str(round(float(list[0]['pp'])))+'pp', actions=[
                             URITemplateAction(
                                 label='go to map', uri='https://osu.ppy.sh/b/' + list[0]['beatmap_id'])
+                        ]),
+                    CarouselColumn(
+                        text=getJsonForBeatmapDetails(list[1]['beatmap_id']),
+                        thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(
+                            list[1]['beatmap_id']) + 'l.jpg',
+                        title=username + ' - ' + str(round(float(list[0]['pp']))) + 'pp', actions=[
+                            URITemplateAction(
+                                label='go to map', uri='https://osu.ppy.sh/b/' + list[1]['beatmap_id'])
+                        ]),
+                    CarouselColumn(
+                        text=getJsonForBeatmapDetails(list[2]['beatmap_id']),
+                        thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(
+                            list[2]['beatmap_id']) + 'l.jpg',
+                        title=username + ' - ' + str(round(float(list[0]['pp']))) + 'pp', actions=[
+                            URITemplateAction(
+                                label='go to map', uri='https://osu.ppy.sh/b/' + list[2]['beatmap_id'])
+                        ]),
+                    CarouselColumn(
+                        text=getJsonForBeatmapDetails(list[3]['beatmap_id']),
+                        thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(
+                            list[3]['beatmap_id']) + 'l.jpg',
+                        title=username + ' - ' + str(round(float(list[0]['pp']))) + 'pp', actions=[
+                            URITemplateAction(
+                                label='go to map', uri='https://osu.ppy.sh/b/' + list[3]['beatmap_id'])
                         ])
                 ])
             elif len(list)<5:
-                line_bot_api.reply_message(token,TextSendMessage(text='just once'))
+                carousel_template = CarouselTemplate(columns=[
+                    CarouselColumn(
+                        text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
+                        thumbnail_image_url=imageurl, title=username, actions=[
+                            URITemplateAction(
+                                label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                        ]),
+                    CarouselColumn(
+                        text=getJsonForBeatmapDetails(list[0]['beatmap_id']),
+                        thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(
+                            list[0]['beatmap_id']) + 'l.jpg',
+                        title=username + ' - ' + str(round(float(list[0]['pp']))) + 'pp', actions=[
+                            URITemplateAction(
+                                label='go to map', uri='https://osu.ppy.sh/b/' + list[0]['beatmap_id'])
+                        ])
+                ])
+
+
+
             template_message = TemplateSendMessage(
                 alt_text='tamachan sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)

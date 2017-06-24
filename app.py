@@ -140,7 +140,7 @@ def getJson(nickname, mode, token):
             carousel_template = CarouselTemplate(columns=[
                 CarouselColumn(
                     text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
-                    thumbnail_image_url=imageurl, title=username, actions=[
+                    thumbnail_image_url=imageurl, title=len(list), actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
                     ])

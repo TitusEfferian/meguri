@@ -132,17 +132,17 @@ def getJson(nickname, mode, token):
             userid = jsonpart[0]['user_id']
             imageurl = 'https://a.ppy.sh/' + userid
             country_rank = jsonpart[0]['pp_country_rank']
-            country = jsonpart[0]['country']
+            country = getJsonForCountry(jsonpart[0]['country'])
 
             carousel_template = CarouselTemplate(columns=[
                 CarouselColumn(
-                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + getJsonForCountry(country) + ')',
+                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
                     ]),
                 CarouselColumn(
-                    text='global rank: ' + list[0]['pp'] + ' (#' + country_rank + ' ' + getJsonForCountry(country) + ')',
+                    text='global rank: ' + list[0]['pp'] + ' (#' + country_rank + ' ' + country + ')',
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)

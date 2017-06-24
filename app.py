@@ -142,12 +142,6 @@ def getJson(nickname, mode, token):
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
-                    ]),
-                CarouselColumn(
-                    text=username+' - '+listForBeatmapDetails[0]['title'],
-                    thumbnail_image_url='https://b.ppy.sh/thumb/' + listForBeatmapId[0]['beatmap_id'] + 'l.jpg', title=username + ' - ' + listForBeatmapId[0]['pp'] + 'pp', actions=[
-                        URITemplateAction(
-                            label='go to map', uri='https://osu.ppy.sh/b/' + listForBeatmapId[0]['beatmap_id'] + '?m=' + mode)
                     ])
             ])
             template_message = TemplateSendMessage(

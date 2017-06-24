@@ -1,29 +1,52 @@
 from __future__ import unicode_literals
 
-import errno
-import os
-import sys
-import tempfile
-from argparse import ArgumentParser
 
-from flask import Flask, request, abort
+
+import errno
+
+import os
+import re
+
+import sys
+
+import tempfile
+
+from argparse import ArgumentParser
+from urllib.request import urlopen
+
+from flask import Flask, request, abort, json
 
 from linebot import (
+
     LineBotApi, WebhookHandler
+
 )
+
 from linebot.exceptions import (
+
     InvalidSignatureError
+
 )
+
 from linebot.models import (
+
     MessageEvent, TextMessage, TextSendMessage,
+
     SourceUser, SourceGroup, SourceRoom,
+
     TemplateSendMessage, ConfirmTemplate, MessageTemplateAction,
+
     ButtonsTemplate, URITemplateAction, PostbackTemplateAction,
+
     CarouselTemplate, CarouselColumn, PostbackEvent,
+
     StickerMessage, StickerSendMessage, LocationMessage, LocationSendMessage,
+
     ImageMessage, VideoMessage, AudioMessage,
-    UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent
-)
+
+    UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent,
+
+    ImageSendMessage)
 
 app = Flask(__name__)
 
@@ -77,86 +100,142 @@ def callback():
         abort(400)
 
     return 'OK'
+def getJsonForCountry(country):
+    jsonurl = urlopen('https://restcountries.eu/rest/v2/alpha/'+country)
+    jsonpart = json.loads(jsonurl.read())
+    return jsonpart['name']
 
+
+
+def getJsonForUser(nickname,mode):
+    jsonurl = urlopen(
+        'https://osu.ppy.sh/api/get_user?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
+    jsonpart = json.loads(jsonurl.read())
+    return jsonpart[0]['username']
+
+def getJsonForUserBest(nickname,mode,flag):
+    jsonurl=urlopen('https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u='+nickname+'&m='+mode)
+    jsonpart=json.loads(jsonurl.read())
+    list = []
+    for x in range(0,5):
+        list.append(jsonpart[x])
+    return list[flag]['beatmap_id']
+def getJsonForUserBestPp(nickname,mode,flag):
+    jsonurl = urlopen('https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u='+nickname+'&m='+mode)
+    jsonpart = json.loads(jsonurl.read())
+    list = []
+    for x in range(0, 5):
+        list.append(jsonpart[x])
+    return str(round(float(list[flag]['pp'])))
+def getJsonForBeatmapSetId(id,mode):
+    jsonurl=urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
+    jsonpart=json.loads(jsonurl.read())
+    return jsonpart[0]['beatmapset_id']
+def getJsonForBeatmapDetails(id,mode):
+    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
+    jsonpart=json.loads(jsonurl.read())
+    return jsonpart[0]['title']+'-'+jsonpart[0]['version']
+
+
+def getJson(nickname, mode, token):
+    jsonurl = urlopen(
+        'https://osu.ppy.sh/api/get_user?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
+    jsonpart = json.loads(jsonurl.read())
+
+    if len(jsonpart) == 0:
+        line_bot_api.reply_message(token,TextSendMessage(text='dont know'))
+    else:
+        if jsonpart[0]['pp_rank']==None:
+            line_bot_api.reply_message(token,TextSendMessage(text='the user has not played recently'))
+        else:
+            username = jsonpart[0]['username']
+            pp_rank = jsonpart[0]['pp_rank']
+            userid = jsonpart[0]['user_id']
+            imageurl = 'https://a.ppy.sh/' + userid
+            country_rank = jsonpart[0]['pp_country_rank']
+            country = jsonpart[0]['country']
+            carousel_template = CarouselTemplate(columns=[
+                CarouselColumn(
+                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + getJsonForCountry(country) + ')',
+                    thumbnail_image_url=imageurl, title=username, actions=[
+                        URITemplateAction(
+                            label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                    ]),
+                CarouselColumn(
+                    text=getJsonForBeatmapDetails(getJsonForUserBest(username, mode, 0),
+                                              mode),
+                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapSetId(
+                    getJsonForUserBest(username, mode, 0), mode) + 'l.jpg', title=username + ' - ' + getJsonForUserBestPp(username, mode, 0) + 'pp', actions=[
+                        URITemplateAction(
+                            label='go to map', uri='https://osu.ppy.sh/b/' + getJsonForUserBest(username,
+                                                                                            mode,
+                                                                                            0) + '?m=' + mode)
+                    ]),
+                CarouselColumn(
+                    text=getJsonForBeatmapDetails(getJsonForUserBest(username, mode, 1),
+                                              mode),
+                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapSetId(
+                    getJsonForUserBest(username, mode, 1), mode) + 'l.jpg', title=username + ' - ' + getJsonForUserBestPp(username, mode, 1) + 'pp', actions=[
+                        URITemplateAction(
+                            label='go to map', uri='https://osu.ppy.sh/b/' + getJsonForUserBest(username,
+                                                                                            mode,
+                                                                                            1) + '?m=' + mode)
+                    ]),
+                CarouselColumn(
+                    text=getJsonForBeatmapDetails(getJsonForUserBest(username, mode, 2),
+                                              mode),
+                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapSetId(
+                    getJsonForUserBest(username, mode, 2), mode) + 'l.jpg', title=username + ' - ' + getJsonForUserBestPp(username, mode, 2) + 'pp', actions=[
+                        URITemplateAction(
+                            label='go to map', uri='https://osu.ppy.sh/b/' + getJsonForUserBest(username,
+                                                                                            mode,
+                                                                                            2) + '?m=' + mode)
+                    ]),
+                CarouselColumn(
+                    text=getJsonForBeatmapDetails(getJsonForUserBest(username, mode, 3),
+                                              mode),
+                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapSetId(
+                    getJsonForUserBest(username, mode, 3), mode) + 'l.jpg', title=username + ' - ' + getJsonForUserBestPp(username, mode, 3) + 'pp', actions=[
+                        URITemplateAction(
+                            label='go to map', uri='https://osu.ppy.sh/b/' + getJsonForUserBest(username,
+                                                                                            mode,
+                                                                                            3) + '?m=' + mode)
+                    ])
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='tamachan sent a photo.', template=carousel_template)
+            line_bot_api.reply_message(token, template_message)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
+    token = event.reply_token
 
-    if text == 'profile':
-        if isinstance(event.source, SourceUser):
-            profile = line_bot_api.get_profile(event.source.user_id)
-            line_bot_api.reply_message(
-                event.reply_token, [
-                    TextSendMessage(
-                        text='Display name: ' + profile.display_name
-                    ),
-                    TextSendMessage(
-                        text='Status message: ' + profile.status_message
-                    )
-                ]
-            )
-        else:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextMessage(text="Bot can't use profile API without user ID"))
-    elif text == 'bye':
+
+    if 'bot  leave' not in event.message.text:
+        if text.startswith('/ctb'):
+            searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
+            searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
+            getJson(searchObj.group(1), '2', token)
+        if text.startswith('/mania'):
+            searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
+            searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
+            getJson(searchObj.group(1), '3', token)
+        if text.startswith('/taiko'):
+            searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
+            searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
+            getJson(searchObj.group(1), '1', token)
+        if text.startswith('/std'):
+            searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
+            searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
+            getJson(searchObj.group(1), '0', token)
+
+
+    else:
         if isinstance(event.source, SourceGroup):
-            line_bot_api.reply_message(
-                event.reply_token, TextMessage(text='Leaving group'))
             line_bot_api.leave_group(event.source.group_id)
         elif isinstance(event.source, SourceRoom):
-            line_bot_api.reply_message(
-                event.reply_token, TextMessage(text='Leaving group'))
             line_bot_api.leave_room(event.source.room_id)
-        else:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextMessage(text="Bot can't leave from 1:1 chat"))
-    elif text == 'confirm':
-        confirm_template = ConfirmTemplate(text='Do it?', actions=[
-            MessageTemplateAction(label='Yes', text='Yes!'),
-            MessageTemplateAction(label='No', text='No!'),
-        ])
-        template_message = TemplateSendMessage(
-            alt_text='Confirm alt text', template=confirm_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
-    elif text == 'buttons':
-        buttons_template = ButtonsTemplate(
-            title='My buttons sample', text='Hello, my buttons', actions=[
-                URITemplateAction(
-                    label='Go to line.me', uri='https://line.me'),
-                PostbackTemplateAction(label='ping', data='ping'),
-                PostbackTemplateAction(
-                    label='ping with text', data='ping',
-                    text='ping'),
-                MessageTemplateAction(label='Translate Rice', text='米')
-            ])
-        template_message = TemplateSendMessage(
-            alt_text='Buttons alt text', template=buttons_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
-    elif text == 'carousel':
-        carousel_template = CarouselTemplate(columns=[
-            CarouselColumn(text='hoge1', title='fuga1', actions=[
-                URITemplateAction(
-                    label='Go to line.me', uri='https://line.me'),
-                PostbackTemplateAction(label='ping', data='ping')
-            ]),
-            CarouselColumn(text='hoge2', title='fuga2', actions=[
-                PostbackTemplateAction(
-                    label='ping with text', data='ping',
-                    text='ping'),
-                MessageTemplateAction(label='Translate Rice', text='米')
-            ]),
-        ])
-        template_message = TemplateSendMessage(
-            alt_text='Buttons alt text', template=carousel_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
-    elif text == 'imagemap':
-        pass
-    else:
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.message.text))
 
 
 @handler.add(MessageEvent, message=LocationMessage)

@@ -7,11 +7,11 @@ import errno
 import os
 import re
 
-import sys
+
 
 import tempfile
 
-from argparse import ArgumentParser
+
 from urllib.request import urlopen
 
 from flask import Flask, request, abort, json
@@ -160,46 +160,6 @@ def getJson(nickname, mode, token):
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
-                    ]),
-                CarouselColumn(
-                    text=getJsonForBeatmapDetails(getJsonForUserBest(username, mode, 0),
-                                              mode),
-                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapSetId(
-                    getJsonForUserBest(username, mode, 0), mode) + 'l.jpg', title=username + ' - ' + getJsonForUserBestPp(username, mode, 0) + 'pp', actions=[
-                        URITemplateAction(
-                            label='go to map', uri='https://osu.ppy.sh/b/' + getJsonForUserBest(username,
-                                                                                            mode,
-                                                                                            0) + '?m=' + mode)
-                    ]),
-                CarouselColumn(
-                    text=getJsonForBeatmapDetails(getJsonForUserBest(username, mode, 1),
-                                              mode),
-                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapSetId(
-                    getJsonForUserBest(username, mode, 1), mode) + 'l.jpg', title=username + ' - ' + getJsonForUserBestPp(username, mode, 1) + 'pp', actions=[
-                        URITemplateAction(
-                            label='go to map', uri='https://osu.ppy.sh/b/' + getJsonForUserBest(username,
-                                                                                            mode,
-                                                                                            1) + '?m=' + mode)
-                    ]),
-                CarouselColumn(
-                    text=getJsonForBeatmapDetails(getJsonForUserBest(username, mode, 2),
-                                              mode),
-                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapSetId(
-                    getJsonForUserBest(username, mode, 2), mode) + 'l.jpg', title=username + ' - ' + getJsonForUserBestPp(username, mode, 2) + 'pp', actions=[
-                        URITemplateAction(
-                            label='go to map', uri='https://osu.ppy.sh/b/' + getJsonForUserBest(username,
-                                                                                            mode,
-                                                                                            2) + '?m=' + mode)
-                    ]),
-                CarouselColumn(
-                    text=getJsonForBeatmapDetails(getJsonForUserBest(username, mode, 3),
-                                              mode),
-                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapSetId(
-                    getJsonForUserBest(username, mode, 3), mode) + 'l.jpg', title=username + ' - ' + getJsonForUserBestPp(username, mode, 3) + 'pp', actions=[
-                        URITemplateAction(
-                            label='go to map', uri='https://osu.ppy.sh/b/' + getJsonForUserBest(username,
-                                                                                            mode,
-                                                                                            3) + '?m=' + mode)
                     ])
             ])
             template_message = TemplateSendMessage(

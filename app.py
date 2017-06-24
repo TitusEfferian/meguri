@@ -104,8 +104,8 @@ def getJsonForCountry(country):
     jsonurl = urlopen('https://restcountries.eu/rest/v2/alpha/'+country)
     jsonpart = json.loads(jsonurl.read())
     return jsonpart['name']
-def getJsonForBeatmapDetails(id):
-    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m=2&b='+id)
+def getJsonForBeatmapDetails(id,mode):
+    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
     jsonpart=json.loads(jsonurl.read())
     return jsonpart[0]['title']+str(round(float(jsonpart[0]['difficultyrating']),2))
 
@@ -142,7 +142,7 @@ def getJson(nickname, mode, token):
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
                     ]),
                 CarouselColumn(
-                    text='global rank: ' + list[0]['pp'] + ' (#' + country_rank + ' ' + country + ')',
+                    text=getJsonForBeatmapDetails(list[0]['beatmap_id'],mode),
                     thumbnail_image_url=imageurl, title=username+' - '+list[0]['pp'], actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)

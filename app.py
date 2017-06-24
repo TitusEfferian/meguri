@@ -128,7 +128,7 @@ def getJson(nickname, mode, token):
                 'https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
             jsonPartForGetUserBest = json.loads(jsonUrlForGetUserBest.read())
             list = []
-            for x in range(0, len(jsonPartForGetUserBest)):
+            for x in range(0, 5):
                 list.append(jsonPartForGetUserBest[x])
             username = jsonpart[0]['username']
             pp_rank = jsonpart[0]['pp_rank']
@@ -139,7 +139,7 @@ def getJson(nickname, mode, token):
 
             carousel_template = CarouselTemplate(columns=[
                 CarouselColumn(
-                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')' + len(list),
+                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)

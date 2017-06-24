@@ -143,7 +143,7 @@ def getJson(nickname, mode, token):
                     ]),
                 CarouselColumn(
                     text='global rank: ' + list[0]['pp'] + ' (#' + country_rank + ' ' + getJsonForCountry(country) + ')',
-                    thumbnail_image_url=imageurl, title=username, actions=[
+                    thumbnail_image_url=imageurl, title=username+' - '+list[0]['pp'], actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
                     ])

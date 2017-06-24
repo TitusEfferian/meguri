@@ -136,15 +136,17 @@ def getJson(nickname, mode, token):
             imageurl = 'https://a.ppy.sh/' + userid
             country_rank = jsonpart[0]['pp_country_rank']
             country = getJsonForCountry(jsonpart[0]['country'])
-
-            carousel_template = CarouselTemplate(columns=[
-                CarouselColumn(
-                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
-                    thumbnail_image_url=imageurl, title=len(list), actions=[
-                        URITemplateAction(
-                            label='go to user', uri='https://osu.ppy.sh/u/' + username)
-                    ])
-            ])
+            if len(list)>=5:
+                carousel_template = CarouselTemplate(columns=[
+                    CarouselColumn(
+                        text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
+                        thumbnail_image_url=imageurl, title=len(list), actions=[
+                            URITemplateAction(
+                                label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                        ])
+                ])
+            elif len(list)<5:
+                line_bot_api.reply_message(token,TextSendMessage(text='just once'))
             template_message = TemplateSendMessage(
                 alt_text='tamachan sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)

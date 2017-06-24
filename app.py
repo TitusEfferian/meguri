@@ -146,9 +146,9 @@ def getJson(nickname, mode, token):
                         ]),
                     CarouselColumn(
                         text=getJsonForBeatmapDetails(list[0]['beatmap_id']),
-                        thumbnail_image_url=imageurl, title=username+' - '+list[0]['pp'], actions=[
+                        thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'])+'l.jpg', title=username+' - '+str(round(float(list[0]['pp'])))+'pp', actions=[
                             URITemplateAction(
-                                label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                                label='go to map', uri='https://osu.ppy.sh/b/' + list[0]['beatmap_id'])
                         ])
                 ])
             elif len(list)<5:

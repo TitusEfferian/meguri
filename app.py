@@ -148,7 +148,7 @@ def getJson(nickname, mode, token):
                     text=getJsonForBeatmapDetails(list[0]['beatmap_id'],mode),
                     thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'],mode)+'l.jpg', title=username+' - '+list[0]['pp'], actions=[
                         URITemplateAction(
-                            label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                            label='go to user', uri='https://osu.ppy.sh/b/'+list[0]['beatmap_id']+'?m='+mode)
                     ])
             ])
             template_message = TemplateSendMessage(

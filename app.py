@@ -146,7 +146,7 @@ def getJson(nickname, mode, token):
                     ]),
                 CarouselColumn(
                     text=getJsonForBeatmapDetails(list[0]['beatmap_id'],mode),
-                    thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'],mode)+'l.jpg', title=username+' - '+list[0]['pp'], actions=[
+                    thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'],mode)+'l.jpg', title=username+' - '+str(round(float(list[0]['pp']))), actions=[
                         URITemplateAction(
                             label='go to map', uri='https://osu.ppy.sh/b/'+list[0]['beatmap_id']+'?m='+mode)
                     ]),
@@ -154,7 +154,7 @@ def getJson(nickname, mode, token):
                     text=getJsonForBeatmapDetails(list[1]['beatmap_id'], mode),
                     thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(list[1]['beatmap_id'],
                                                                                            mode) + 'l.jpg',
-                    title=username + ' - ' + list[1]['pp'], actions=[
+                    title=username + ' - ' + str(round(float(list[0]['pp']))), actions=[
                         URITemplateAction(
                             label='go to map', uri='https://osu.ppy.sh/b/' + list[1]['beatmap_id'] + '?m=' + mode)
                     ]),
@@ -162,7 +162,7 @@ def getJson(nickname, mode, token):
                     text=getJsonForBeatmapDetails(list[2]['beatmap_id'], mode),
                     thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(list[2]['beatmap_id'],
                                                                                            mode) + 'l.jpg',
-                    title=username + ' - ' + list[2]['pp'], actions=[
+                    title=username + ' - ' + str(round(float(list[0]['pp']))), actions=[
                         URITemplateAction(
                             label='go to map', uri='https://osu.ppy.sh/b/' + list[2]['beatmap_id'] + '?m=' + mode)
                     ]),
@@ -170,7 +170,7 @@ def getJson(nickname, mode, token):
                     text=getJsonForBeatmapDetails(list[3]['beatmap_id'], mode),
                     thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(list[3]['beatmap_id'],
                                                                                            mode) + 'l.jpg',
-                    title=username + ' - ' + list[3]['pp'], actions=[
+                    title=username + ' - ' + str(round(float(list[0]['pp']))), actions=[
                         URITemplateAction(
                             label='go to map', uri='https://osu.ppy.sh/b/' + list[3]['beatmap_id'] + '?m=' + mode)
                     ])

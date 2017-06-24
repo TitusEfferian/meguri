@@ -128,7 +128,7 @@ def getJson(nickname, mode, token):
                 'https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
             jsonPartForGetUserBest = json.loads(jsonUrlForGetUserBest.read())
             list = []
-            for x in range(0, 5):
+            for x in range(0, len(jsonPartForGetUserBest)):
                 list.append(jsonPartForGetUserBest[x])
             username = jsonpart[0]['username']
             pp_rank = jsonpart[0]['pp_rank']
@@ -144,7 +144,6 @@ def getJson(nickname, mode, token):
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
                     ])
-
             ])
             template_message = TemplateSendMessage(
                 alt_text='tamachan sent a photo.', template=carousel_template)

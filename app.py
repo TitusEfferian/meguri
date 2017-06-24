@@ -106,37 +106,6 @@ def getJsonForCountry(country):
     return jsonpart['name']
 
 
-
-def getJsonForUser(nickname,mode):
-    jsonurl = urlopen(
-        'https://osu.ppy.sh/api/get_user?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
-    jsonpart = json.loads(jsonurl.read())
-    return jsonpart[0]['username']
-
-def getJsonForUserBest(nickname,mode,flag):
-    jsonurl=urlopen('https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u='+nickname+'&m='+mode)
-    jsonpart=json.loads(jsonurl.read())
-    list = []
-    for x in range(0,5):
-        list.append(jsonpart[x])
-    return list[flag]['beatmap_id']
-def getJsonForUserBestPp(nickname,mode,flag):
-    jsonurl = urlopen('https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u='+nickname+'&m='+mode)
-    jsonpart = json.loads(jsonurl.read())
-    list = []
-    for x in range(0, 5):
-        list.append(jsonpart[x])
-    return str(round(float(list[flag]['pp'])))
-def getJsonForBeatmapSetId(id,mode):
-    jsonurl=urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
-    jsonpart=json.loads(jsonurl.read())
-    return jsonpart[0]['beatmapset_id']
-def getJsonForBeatmapDetails(id,mode):
-    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
-    jsonpart=json.loads(jsonurl.read())
-    return jsonpart[0]['title']+'-'+jsonpart[0]['version']
-
-
 def getJson(nickname, mode, token):
     jsonurl = urlopen(
         'https://osu.ppy.sh/api/get_user?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
@@ -148,18 +117,37 @@ def getJson(nickname, mode, token):
         if jsonpart[0]['pp_rank']==None:
             line_bot_api.reply_message(token,TextSendMessage(text='the user has not played recently'))
         else:
+            jsonUrlForBeatmapId = urlopen(
+                'https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
+            jsonPartForBeatmapId =json.loads(jsonUrlForBeatmapId.read())
+            jsonUrlForBeatmapDetails = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m=2&b='+id)
+            jsonPartForBeatmapDetails = json.loads(jsonUrlForBeatmapDetails.read())
+            listForBeatmapId = []
+            listForBeatmapDetails = []
+            for x in range(0, 5):
+                listForBeatmapId.append(jsonPartForBeatmapId[x])
+            for y in range(0,5):
+                listForBeatmapDetails.append(jsonPartForBeatmapDetails[y])
+
             username = jsonpart[0]['username']
             pp_rank = jsonpart[0]['pp_rank']
             userid = jsonpart[0]['user_id']
             imageurl = 'https://a.ppy.sh/' + userid
             country_rank = jsonpart[0]['pp_country_rank']
             country = jsonpart[0]['country']
+
             carousel_template = CarouselTemplate(columns=[
                 CarouselColumn(
                     text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + getJsonForCountry(country) + ')',
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                    ]),
+                CarouselColumn(
+                    text=username+' - '+listForBeatmapDetails[0]['title'],
+                    thumbnail_image_url='https://b.ppy.sh/thumb/' + listForBeatmapId[0]['beatmap_id'] + 'l.jpg', title=username + ' - ' + listForBeatmapId[0]['pp'] + 'pp', actions=[
+                        URITemplateAction(
+                            label='go to map', uri='https://osu.ppy.sh/b/' + listForBeatmapId[0]['beatmap_id'] + '?m=' + mode)
                     ])
             ])
             template_message = TemplateSendMessage(

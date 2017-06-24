@@ -104,7 +104,10 @@ def getJsonForCountry(country):
     jsonurl = urlopen('https://restcountries.eu/rest/v2/alpha/'+country)
     jsonpart = json.loads(jsonurl.read())
     return jsonpart['name']
-
+def getJsonForBeatmapDetails(id):
+    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m=2&b='+id)
+    jsonpart=json.loads(jsonurl.read())
+    return jsonpart[0]['title']+str(round(float(jsonpart[0]['difficultyrating']),2))
 
 def getJson(nickname, mode, token):
     jsonurl = urlopen(
@@ -118,7 +121,12 @@ def getJson(nickname, mode, token):
             line_bot_api.reply_message(token,TextSendMessage(text='the user has not played recently'))
         else:
 
-
+            jsonUrlForGetUserBest = urlopen(
+                'https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
+            jsonPartForGetUserBest = json.loads(jsonUrlForGetUserBest.read())
+            list = []
+            for x in range(0, 5):
+                list.append(jsonPartForGetUserBest[x])
             username = jsonpart[0]['username']
             pp_rank = jsonpart[0]['pp_rank']
             userid = jsonpart[0]['user_id']
@@ -129,6 +137,12 @@ def getJson(nickname, mode, token):
             carousel_template = CarouselTemplate(columns=[
                 CarouselColumn(
                     text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + getJsonForCountry(country) + ')',
+                    thumbnail_image_url=imageurl, title=username, actions=[
+                        URITemplateAction(
+                            label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                    ]),
+                CarouselColumn(
+                    text='global rank: ' + list[0]['pp'] + ' (#' + country_rank + ' ' + getJsonForCountry(country) + ')',
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)

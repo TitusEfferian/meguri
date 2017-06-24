@@ -145,7 +145,7 @@ def getJson(nickname, mode, token):
                                 label='go to user', uri='https://osu.ppy.sh/u/' + username)
                         ]),
                     CarouselColumn(
-                        text=list[0]['beatmap_id'],
+                        text=getJsonForBeatmapDetails(list[0]['beatmap_id']),
                         thumbnail_image_url=imageurl, title=len(list), actions=[
                             URITemplateAction(
                                 label='go to user', uri='https://osu.ppy.sh/u/' + username)

@@ -128,7 +128,7 @@ def getJson(nickname, mode, token):
                 'https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
             jsonPartForGetUserBest = json.loads(jsonUrlForGetUserBest.read())
             list = []
-            for x in range(0, 5):
+            for x in range(0, len(jsonPartForGetUserBest)):
                 list.append(jsonPartForGetUserBest[x])
             username = jsonpart[0]['username']
             pp_rank = jsonpart[0]['pp_rank']
@@ -139,17 +139,12 @@ def getJson(nickname, mode, token):
 
             carousel_template = CarouselTemplate(columns=[
                 CarouselColumn(
-                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
+                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')' + len(list),
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
-                    ]),
-                CarouselColumn(
-                    text=getJsonForBeatmapDetails(list[0]['beatmap_id']),
-                    thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'])+'l.jpg', title=username+' - '+str(round(float(list[0]['pp'])))+'pp', actions=[
-                        URITemplateAction(
-                            label='go to map', uri='https://osu.ppy.sh/b/'+list[0]['beatmap_id']+'?m='+mode)
                     ])
+
             ])
             template_message = TemplateSendMessage(
                 alt_text='tamachan sent a photo.', template=carousel_template)

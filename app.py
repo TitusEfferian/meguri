@@ -105,7 +105,7 @@ def getJsonForCountry(country):
     jsonpart = json.loads(jsonurl.read())
     return jsonpart['name']
 def getJsonForBeatmapDetails(id):
-    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7fb='+id)
+    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&b='+id)
     jsonpart=json.loads(jsonurl.read())
     return jsonpart[0]['title']+' - '+jsonpart[0]['version']
 def getJsonForBeatmapsetId(id):

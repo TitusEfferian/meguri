@@ -108,7 +108,10 @@ def getJsonForBeatmapDetails(id,mode):
     jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
     jsonpart=json.loads(jsonurl.read())
     return jsonpart[0]['title']+str(round(float(jsonpart[0]['difficultyrating']),2))
-
+def getJsonForBeatmapsetId(id,mode):
+    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
+    jsonpart=json.loads(jsonurl.read())
+    return jsonpart[0]['beatmapset_id']
 def getJson(nickname, mode, token):
     jsonurl = urlopen(
         'https://osu.ppy.sh/api/get_user?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
@@ -143,7 +146,7 @@ def getJson(nickname, mode, token):
                     ]),
                 CarouselColumn(
                     text=getJsonForBeatmapDetails(list[0]['beatmap_id'],mode),
-                    thumbnail_image_url='https://b.ppy.sh/thumb/'+list[0]['beatmapset_id']+'l.jpg', title=username+' - '+list[0]['pp'], actions=[
+                    thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'],mode)+'l.jpg', title=username+' - '+list[0]['pp'], actions=[
                         URITemplateAction(
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
                     ])
@@ -158,7 +161,7 @@ def handle_text_message(event):
     token = event.reply_token
 
 
-    if 'bot  leave' not in event.message.text:
+    if 'bot leave' not in event.message.text:
         if text.startswith('/ctb'):
             searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
             searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)

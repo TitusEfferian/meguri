@@ -104,12 +104,12 @@ def getJsonForCountry(country):
     jsonurl = urlopen('https://restcountries.eu/rest/v2/alpha/'+country)
     jsonpart = json.loads(jsonurl.read())
     return jsonpart['name']
-def getJsonForBeatmapDetails(id,mode):
-    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
+def getJsonForBeatmapDetails(id):
+    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7fb='+id)
     jsonpart=json.loads(jsonurl.read())
     return jsonpart[0]['title']+' - '+jsonpart[0]['version']
-def getJsonForBeatmapsetId(id,mode):
-    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&m='+mode+'&b='+id)
+def getJsonForBeatmapsetId(id):
+    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&b='+id)
     jsonpart=json.loads(jsonurl.read())
     return jsonpart[0]['beatmapset_id']
 def getJson(nickname, mode, token):
@@ -145,10 +145,31 @@ def getJson(nickname, mode, token):
                             label='go to user', uri='https://osu.ppy.sh/u/' + username)
                     ]),
                 CarouselColumn(
-                    text=getJsonForBeatmapDetails(list[0]['beatmap_id'],mode),
-                    thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'],mode)+'l.jpg', title=username+' - '+str(round(float(list[0]['pp'])))+'pp', actions=[
+                    text=getJsonForBeatmapDetails(list[0]['beatmap_id']),
+                    thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'])+'l.jpg', title=username+' - '+str(round(float(list[0]['pp'])))+'pp', actions=[
                         URITemplateAction(
                             label='go to map', uri='https://osu.ppy.sh/b/'+list[0]['beatmap_id']+'?m='+mode)
+                    ]),
+                CarouselColumn(
+                    text=getJsonForBeatmapDetails(list[1]['beatmap_id']),
+                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(list[1]['beatmap_id']) + 'l.jpg',
+                    title=username + ' - ' + str(round(float(list[1]['pp'])))+'pp', actions=[
+                        URITemplateAction(
+                            label='go to map', uri='https://osu.ppy.sh/b/' + list[1]['beatmap_id'] + '?m=' + mode)
+                    ]),
+                CarouselColumn(
+                    text=getJsonForBeatmapDetails(list[2]['beatmap_id']),
+                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(list[2]['beatmap_id']) + 'l.jpg',
+                    title=username + ' - ' + str(round(float(list[2]['pp'])))+'pp', actions=[
+                        URITemplateAction(
+                            label='go to map', uri='https://osu.ppy.sh/b/' + list[2]['beatmap_id'] + '?m=' + mode)
+                    ]),
+                CarouselColumn(
+                    text=getJsonForBeatmapDetails(list[3]['beatmap_id']),
+                    thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(list[3]['beatmap_id']) + 'l.jpg',
+                    title=username + ' - ' + str(round(float(list[3]['pp'])))+'pp', actions=[
+                        URITemplateAction(
+                            label='go to map', uri='https://osu.ppy.sh/b/' + list[3]['beatmap_id'] + '?m=' + mode)
                     ])
             ])
             template_message = TemplateSendMessage(

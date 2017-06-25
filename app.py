@@ -142,7 +142,7 @@ def getJsonForWeather(city,token):
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
                 text='test',
-                thumbnail_image_url='https://openweathermap.org/img/w/03n.png', title='test', actions=[
+                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
                     URITemplateAction(
                         label='go to user', uri='https://osu.ppy.sh')
                 ])

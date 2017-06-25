@@ -133,7 +133,7 @@ def getJson(nickname, mode, token):
             line_bot_api.reply_message(token, template_message)
 
 def regexMethodForHour(text):
-    searchObj = re.search(r'(.*?):', text + ';', re.M | re.I)
+    searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
     return searchObj.group(1)
 def methodForNow():
     return int(regexMethodForHour(str(datetime.datetime.now().time())))-12

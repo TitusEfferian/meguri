@@ -142,34 +142,25 @@ def getJsonForWeather(city,token):
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
                 text='test',
-                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
+                thumbnail_image_url='https://openweathermap.org/img/w/'+jsonpart['list'][0]['weather'][0]['icon']+'.png', title='test', actions=[
                     URITemplateAction(
                         label='go to user', uri='https://osu.ppy.sh')
                 ]),
             CarouselColumn(
                 text='test',
-                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
+                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][1]['weather'][1][
+                    'icon'] + '.png', title='test', actions=[
                     URITemplateAction(
                         label='go to user', uri='https://osu.ppy.sh')
                 ]),
             CarouselColumn(
                 text='test',
-                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
-                    URITemplateAction(
-                        label='go to user', uri='https://osu.ppy.sh')
-                ]),
-            CarouselColumn(
-                text='test',
-                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
-                    URITemplateAction(
-                        label='go to user', uri='https://osu.ppy.sh')
-                ]),
-            CarouselColumn(
-                text='test',
-                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
+                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][2]['weather'][2][
+                    'icon'] + '.png', title='test', actions=[
                     URITemplateAction(
                         label='go to user', uri='https://osu.ppy.sh')
                 ])
+
         ])
         template_message = TemplateSendMessage(
             alt_text='meguri sent a photo.', template=carousel_template)

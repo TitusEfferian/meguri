@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import datetime
+
 import errno
 
 import os
@@ -14,6 +14,7 @@ from urllib.error import HTTPError
 from urllib.request import urlopen
 
 from flask import Flask, request, abort, json
+from future.backports import datetime
 
 from linebot import (
 
@@ -186,6 +187,8 @@ def handle_text_message(event):
         if text.startswith('/weather'):
             searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
             getJsonForWeather(searchObj.group(1),token)
+        if text.startswith('now'):
+            line_bot_api.reply_message(token,TextSendMessage(text=methodForNow()))
 
 
 

@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-
 import errno
 
 import os
@@ -188,7 +187,7 @@ def handle_text_message(event):
             searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
             getJsonForWeather(searchObj.group(1),token)
         if text.startswith('now'):
-            line_bot_api.reply_message(token,TextSendMessage(text=str(methodForNow())))
+            line_bot_api.reply_message(token,TextSendMessage(text=methodForNow()))
 
 
 

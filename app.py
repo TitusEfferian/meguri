@@ -146,7 +146,7 @@ def getJsonForWeather(city):
                    jsonpart['list'][0]['dt_txt'] + ' ' + jsonpart['list'][0]['weather'][0]['main']
     except HTTPError as err:
         if err.code == 404:
-            print('city not found')
+            return 'city not found'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):

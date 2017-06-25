@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
-
-
+import datetime
 import errno
 
 import os
@@ -133,9 +132,11 @@ def getJson(nickname, mode, token):
                 alt_text='meguri sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)
 
-def regexMethod(text):
-    searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
+def regexMethodForHour(text):
+    searchObj = re.search(r'(.*?):', text + ';', re.M | re.I)
     return searchObj.group(1)
+def methodForNow():
+    return int(regexMethodForHour(str(datetime.datetime.now().time())))-12
 
 def getJsonForWeather(city,token):
     try:
@@ -145,7 +146,7 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=jsonpart['list'][0]['weather'][0]['main']+regexMethod(jsonpart['list'][0]['dt_txt']),
+                text=regexMethodForHour(int(regexMethodForHour(jsonpart['list'][4]['dt_txt']))+12),
                 title=jsonpart['city']['name']+', '+countryId, actions=[
                     URITemplateAction(
                         label='open in browser', uri='https://openweathermap.org/')

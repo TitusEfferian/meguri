@@ -146,12 +146,6 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=str(regexMethodForHour(jsonpart['list'][4]['dt_txt'])),
-                title=jsonpart['city']['name']+', '+countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
                 text=str(methodForNow()),
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
                     URITemplateAction(

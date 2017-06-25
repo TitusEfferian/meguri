@@ -133,6 +133,13 @@ def getJson(nickname, mode, token):
                 alt_text='tamachan sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)
 
+def getJsonForWeather(city):
+    jsonurl = urlopen(
+        'http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=fe18035f6b83c8b163d1a7a8ef934a75')
+    jsonpart = json.loads(jsonurl.read())
+    return jsonpart['city']['name']+', '+getJsonForCountry(jsonpart['city']['country'])+' '+jsonpart['list'][0]['dt_txt']+' '+jsonpart['list'][0]['weather'][0]['main']
+
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
@@ -156,6 +163,11 @@ def handle_text_message(event):
             searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
             searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
             getJson(searchObj.group(1), '0', token)
+        if text.startswith('/weather'):
+            searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
+            line_bot_api.reply_message(token,TextSendMessage(text=getJsonForWeather(searchObj.group(1))
+))
+
 
 
     else:

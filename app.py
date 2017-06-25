@@ -156,10 +156,6 @@ def handle_text_message(event):
             searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
             searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
             getJson(searchObj.group(1), '0', token)
-        if text.startswith('/debug'):
-            line_bot_api.reply_message(token,TextSendMessage(text='test'+text))
-        if text.startswith('/debug2'):
-            line_bot_api.reply_message(token,TextSendMessage(text='test'))
 
 
     else:
@@ -169,14 +165,7 @@ def handle_text_message(event):
             line_bot_api.leave_room(event.source.room_id)
 
 
-@handler.add(MessageEvent, message=LocationMessage)
-def handle_location_message(event):
-    location = event.message.latitude+' '+event.message.longitude
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=location)
-    )
 
 
 @handler.add(MessageEvent, message=StickerMessage)

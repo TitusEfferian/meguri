@@ -134,7 +134,7 @@ def getJson(nickname, mode, token):
 
 def regexMethodForHour(text):
     searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
-    return searchObj.group(1)
+    return int(searchObj.group(1))+12
 def methodForNow():
     return int(regexMethodForHour(str(datetime.datetime.now().time())))-12
 
@@ -146,7 +146,7 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=regexMethodForHour(jsonpart['list'][4]['dt_txt']),
+                text=str(regexMethodForHour(jsonpart['list'][4]['dt_txt'])),
                 title=jsonpart['city']['name']+', '+countryId, actions=[
                     URITemplateAction(
                         label='open in browser', uri='https://openweathermap.org/')

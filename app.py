@@ -145,6 +145,30 @@ def getJsonForWeather(city,token):
                 thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
                     URITemplateAction(
                         label='go to user', uri='https://osu.ppy.sh')
+                ]),
+            CarouselColumn(
+                text='test',
+                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
+                    URITemplateAction(
+                        label='go to user', uri='https://osu.ppy.sh')
+                ]),
+            CarouselColumn(
+                text='test',
+                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
+                    URITemplateAction(
+                        label='go to user', uri='https://osu.ppy.sh')
+                ]),
+            CarouselColumn(
+                text='test',
+                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
+                    URITemplateAction(
+                        label='go to user', uri='https://osu.ppy.sh')
+                ]),
+            CarouselColumn(
+                text='test',
+                thumbnail_image_url='https://openweathermap.org/img/w/01d.png', title='test', actions=[
+                    URITemplateAction(
+                        label='go to user', uri='https://osu.ppy.sh')
                 ])
         ])
         template_message = TemplateSendMessage(

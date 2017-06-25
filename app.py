@@ -104,14 +104,6 @@ def getJsonForCountry(country):
     jsonurl = urlopen('https://restcountries.eu/rest/v2/alpha/'+country)
     jsonpart = json.loads(jsonurl.read())
     return jsonpart['name']
-def getJsonForBeatmapDetails(id):
-    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&b='+id)
-    jsonpart=json.loads(jsonurl.read())
-    return jsonpart[0]['title']+' - '+jsonpart[0]['version']
-def getJsonForBeatmapsetId(id):
-    jsonurl = urlopen('https://osu.ppy.sh/api/get_beatmaps?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&b='+id)
-    jsonpart=json.loads(jsonurl.read())
-    return jsonpart[0]['beatmapset_id']
 def getJson(nickname, mode, token):
     jsonurl = urlopen(
         'https://osu.ppy.sh/api/get_user?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
@@ -123,78 +115,20 @@ def getJson(nickname, mode, token):
         if jsonpart[0]['pp_rank']==None:
             line_bot_api.reply_message(token,TextSendMessage(text='the user has not played recently'))
         else:
-
-            jsonUrlForGetUserBest = urlopen(
-                'https://osu.ppy.sh/api/get_user_best?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
-            jsonPartForGetUserBest = json.loads(jsonUrlForGetUserBest.read())
-            list = []
-            for x in range(0, len(jsonPartForGetUserBest)):
-                list.append(jsonPartForGetUserBest[x])
             username = jsonpart[0]['username']
             pp_rank = jsonpart[0]['pp_rank']
             userid = jsonpart[0]['user_id']
             imageurl = 'https://a.ppy.sh/' + userid
             country_rank = jsonpart[0]['pp_country_rank']
             country = getJsonForCountry(jsonpart[0]['country'])
-            if len(list)>=5:
-                carousel_template = CarouselTemplate(columns=[
-                    CarouselColumn(
-                        text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
-                        thumbnail_image_url=imageurl, title=username, actions=[
-                            URITemplateAction(
-                                label='go to user', uri='https://osu.ppy.sh/u/' + username)
-                        ]),
-                    CarouselColumn(
-                        text=getJsonForBeatmapDetails(list[0]['beatmap_id']),
-                        thumbnail_image_url='https://b.ppy.sh/thumb/'+getJsonForBeatmapsetId(list[0]['beatmap_id'])+'l.jpg', title=username+' - '+str(round(float(list[0]['pp'])))+'pp', actions=[
-                            URITemplateAction(
-                                label='go to map', uri='https://osu.ppy.sh/b/' + list[0]['beatmap_id'])
-                        ]),
-                    CarouselColumn(
-                        text=getJsonForBeatmapDetails(list[1]['beatmap_id']),
-                        thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(
-                            list[1]['beatmap_id']) + 'l.jpg',
-                        title=username + ' - ' + str(round(float(list[1]['pp']))) + 'pp', actions=[
-                            URITemplateAction(
-                                label='go to map', uri='https://osu.ppy.sh/b/' + list[1]['beatmap_id'])
-                        ]),
-                    CarouselColumn(
-                        text=getJsonForBeatmapDetails(list[2]['beatmap_id']),
-                        thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(
-                            list[2]['beatmap_id']) + 'l.jpg',
-                        title=username + ' - ' + str(round(float(list[2]['pp']))) + 'pp', actions=[
-                            URITemplateAction(
-                                label='go to map', uri='https://osu.ppy.sh/b/' + list[2]['beatmap_id'])
-                        ]),
-                    CarouselColumn(
-                        text=getJsonForBeatmapDetails(list[3]['beatmap_id']),
-                        thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(
-                            list[3]['beatmap_id']) + 'l.jpg',
-                        title=username + ' - ' + str(round(float(list[3]['pp']))) + 'pp', actions=[
-                            URITemplateAction(
-                                label='go to map', uri='https://osu.ppy.sh/b/' + list[3]['beatmap_id'])
-                        ])
-                ])
-            elif len(list)<5:
-                carousel_template = CarouselTemplate(columns=[
-                    CarouselColumn(
-                        text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
-                        thumbnail_image_url=imageurl, title=username, actions=[
-                            URITemplateAction(
-                                label='go to user', uri='https://osu.ppy.sh/u/' + username)
-                        ]),
-                    CarouselColumn(
-                        text=getJsonForBeatmapDetails(list[0]['beatmap_id']),
-                        thumbnail_image_url='https://b.ppy.sh/thumb/' + getJsonForBeatmapsetId(
-                            list[0]['beatmap_id']) + 'l.jpg',
-                        title=username + ' - ' + str(round(float(list[0]['pp']))) + 'pp', actions=[
-                            URITemplateAction(
-                                label='go to map', uri='https://osu.ppy.sh/b/' + list[0]['beatmap_id'])
-                        ])
-                ])
-
-
-
+            carousel_template = CarouselTemplate(columns=[
+                CarouselColumn(
+                    text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
+                    thumbnail_image_url=imageurl, title=username, actions=[
+                        URITemplateAction(
+                            label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                    ])
+            ])
             template_message = TemplateSendMessage(
                 alt_text='tamachan sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)

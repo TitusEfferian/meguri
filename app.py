@@ -167,9 +167,12 @@ def handle_text_message(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
+    jsonurl = urlopen('http://api.openweathermap.org/data/2.5/weather?lat='+event.message.latitude+'&lon='+event.message.longitude+'&appid=fe18035f6b83c8b163d1a7a8ef934a75')
+    jsonpart = json.loads(jsonurl.read())
+    weather = jsonpart['weather']['main']
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.longitude)
+        TextSendMessage(text=weather)
     )
 
 

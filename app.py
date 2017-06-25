@@ -171,7 +171,7 @@ def handle_location_message(event):
     longitude = event.message.longitude
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=latitude)
+        TextSendMessage(text=latitude+','+longitude)
     )
 
 

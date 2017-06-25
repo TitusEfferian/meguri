@@ -138,10 +138,11 @@ def getJsonForWeather(city,token):
         jsonurl = urlopen(
             'http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=fe18035f6b83c8b163d1a7a8ef934a75')
         jsonpart = json.loads(jsonurl.read())
+        countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
                 text='test',
-                thumbnail_image_url='http://openweathermap.org/img/w/03n.png', title=jsonpart['city']['name']+', '+getJsonForCountry(jsonpart['city']['country']), actions=[
+                thumbnail_image_url='http://openweathermap.org/img/w/03n.png', title=jsonpart['city']['name']+', '+countryId, actions=[
                     URITemplateAction(
                         label='go to user', uri='http://openweathermap.org/img/w/03n.png')
                 ])

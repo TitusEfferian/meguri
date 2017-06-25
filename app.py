@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-import datetime
+
 import errno
 
 import os
@@ -133,13 +133,11 @@ def getJson(nickname, mode, token):
                 alt_text='meguri sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)
 
+   
 def regexMethodForHour(text):
-    searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
-    return int(searchObj.group(1))+12
-def methodForNow():
-    return str(int(regexMethodForHour(str(datetime.datetime.now().time())))-12)
-def methodTime():
-    return str(datetime.now())
+    searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
+    return searchObj.group(1)
+
 
 def getJsonForWeather(city,token):
     try:
@@ -189,8 +187,6 @@ def handle_text_message(event):
         if text.startswith('/weather'):
             searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
             getJsonForWeather(searchObj.group(1),token)
-        if text.startswith('now'):
-            line_bot_api.reply_message(token,TextSendMessage(text=methodTime()))
 
 
 

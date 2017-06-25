@@ -164,7 +164,7 @@ def handle_text_message(event):
             searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
             getJson(searchObj.group(1), '0', token)
         if text.startswith('/weather'):
-            searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
+            searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
             line_bot_api.reply_message(token,TextSendMessage(text=searchObj.group(1)))
 
 

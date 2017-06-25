@@ -130,20 +130,25 @@ def getJson(nickname, mode, token):
                     ])
             ])
             template_message = TemplateSendMessage(
-                alt_text='tamachan sent a photo.', template=carousel_template)
+                alt_text='meguri sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)
 
-def getJsonForWeather(city):
+def getJsonForWeather(city,token):
     try:
         jsonurl = urlopen(
             'http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=fe18035f6b83c8b163d1a7a8ef934a75')
         jsonpart = json.loads(jsonurl.read())
-
-        if jsonpart['cod'] == '404':
-            return 'city not found'
-        else:
-            return jsonpart['city']['name'] + ', ' + getJsonForCountry(jsonpart['city']['country']) + ' ' + \
-                   jsonpart['list'][0]['dt_txt'] + ' ' + jsonpart['list'][0]['weather'][0]['main']
+        carousel_template = CarouselTemplate(columns=[
+            CarouselColumn(
+                text='test',
+                thumbnail_image_url='http://openweathermap.org/img/w/03n.png', title=jsonpart['city']['name']+', '+getJsonForCountry(jsonpart['city']['country']), actions=[
+                    URITemplateAction(
+                        label='go to user', uri='http://openweathermap.org/img/w/03n.png')
+                ])
+        ])
+        template_message = TemplateSendMessage(
+            alt_text='meguri sent a photo.', template=carousel_template)
+        line_bot_api.reply_message(token, template_message)
     except HTTPError as err:
         if err.code == 404:
             return 'city not found'

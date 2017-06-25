@@ -133,6 +133,10 @@ def getJson(nickname, mode, token):
                 alt_text='meguri sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)
 
+def regexMethod(text):
+    searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
+    return searchObj.group(1)
+
 def getJsonForWeather(city,token):
     try:
         jsonurl = urlopen(
@@ -141,10 +145,10 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text='test',
+                text=jsonpart['list'][0]['weather'][0]['main']+regexMethod(jsonpart['list'][0]['dt_txt']),
                 title=jsonpart['city']['name']+', '+countryId, actions=[
                     URITemplateAction(
-                        label='go to user', uri='https://osu.ppy.sh')
+                        label='open in browser', uri='https://openweathermap.org/')
                 ])
 
         ])

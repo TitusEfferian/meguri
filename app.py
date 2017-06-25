@@ -169,10 +169,7 @@ def handle_text_message(event):
 def handle_location_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        LocationSendMessage(
-            title=event.message.title, address=event.message.address,
-            latitude=event.message.latitude, longitude=event.message.longitude
-        )
+        TextSendMessage(text=event.message.longitude)
     )
 
 

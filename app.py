@@ -10,7 +10,7 @@ import re
 
 
 import tempfile
-
+from urllib.error import HTTPError
 
 from urllib.request import urlopen
 
@@ -134,15 +134,19 @@ def getJson(nickname, mode, token):
             line_bot_api.reply_message(token, template_message)
 
 def getJsonForWeather(city):
-    jsonurl = urlopen(
-        'http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=fe18035f6b83c8b163d1a7a8ef934a75')
-    jsonpart = json.loads(jsonurl.read())
+    try:
+        jsonurl = urlopen(
+            'http://api.openweathermap.org/data/2.5/forecast?q=' + city + '&appid=fe18035f6b83c8b163d1a7a8ef934a75')
+        jsonpart = json.loads(jsonurl.read())
 
-    if jsonpart['cod']=='404':
-        return 'city not found'
-    else:
-        return jsonpart['city']['name']+', '+getJsonForCountry(jsonpart['city']['country'])+' '+jsonpart['list'][0]['dt_txt']+' '+jsonpart['list'][0]['weather'][0]['main']
-
+        if jsonpart['cod'] == '404':
+            return 'city not found'
+        else:
+            return jsonpart['city']['name'] + ', ' + getJsonForCountry(jsonpart['city']['country']) + ' ' + \
+                   jsonpart['list'][0]['dt_txt'] + ' ' + jsonpart['list'][0]['weather'][0]['main']
+    except HTTPError as err:
+        if err.code == 404:
+            print('city not found')
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):

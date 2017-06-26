@@ -233,8 +233,20 @@ def imageSearch(token,text):
         req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
         resp = urlopen(req)
         content = json.loads(resp.read())
+        carousel_template = CarouselTemplate(columns=[
+            CarouselColumn(
+                text=content['value'][0]['name'],
+                thumbnail_image_url=content['value'][0]['thumbnailUrl'],
+                title=content['value'][0]['name'], actions=[
+                    URITemplateAction(
+                        label='open in browser', uri='https://openweathermap.org/')
+                ])
+        ])
+        template_message = TemplateSendMessage(
+            alt_text='meguri sent a photo.', template=carousel_template)
+        line_bot_api.reply_message(token, template_message)
 
-        line_bot_api.reply_message(token,[TextSendMessage(text=content['value'][0]['contentUrl']),TextSendMessage(text=content['value'][0]['thumbnailUrl'])])
+       # line_bot_api.reply_message(token,[TextSendMessage(text=content['value'][0]['contentUrl']),TextSendMessage(text=content['value'][0]['thumbnailUrl'])])
     except HTTPError as err:
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='not found'))

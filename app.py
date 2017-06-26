@@ -247,7 +247,8 @@ listForThumbnail = []
 def imageSearch(token,text):
     try:
         content = azureImage(text)
-
+        listForContent = None
+        listForThumbnail = None
         for x in range(0, 5):
             listForContent.append(content['value'][x]['contentUrl'])
             listForThumbnail.append(content['value'][x]['thumbnailUrl'])

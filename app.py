@@ -246,10 +246,10 @@ def azureImage(text):
 def imageSearch(token,text):
     try:
         content = azureImage(text)
-
+        textEncode = text.replace('+',' ')
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text='a',
+                text=textEncode,
                 thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',
@@ -257,7 +257,7 @@ def imageSearch(token,text):
                     )
                 ]),
             CarouselColumn(
-                text='b',
+                text=textEncode,
                 thumbnail_image_url=content['value'][1]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',
@@ -265,7 +265,7 @@ def imageSearch(token,text):
                     )
                 ]),
             CarouselColumn(
-                text='c',
+                text=textEncode,
                 thumbnail_image_url=content['value'][2]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',
@@ -273,7 +273,7 @@ def imageSearch(token,text):
                     )
                 ]),
             CarouselColumn(
-                text='c',
+                text=textEncode,
                 thumbnail_image_url=content['value'][3]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',
@@ -281,7 +281,7 @@ def imageSearch(token,text):
                     )
                 ]),
             CarouselColumn(
-                text='c',
+                text=textEncode,
                 thumbnail_image_url=content['value'][4]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',

@@ -235,9 +235,9 @@ def imageSearch(token,text):
         content = json.loads(resp.read())
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=content['value'][0]['name'],
-                thumbnail_image_url=content['value'][0]['thumbnailUrl'],
-                title=content['value'][0]['name'], actions=[
+                text='test',
+                thumbnail_image_url='https://tse3.mm.bing.net/th?id=OIP.dZJw6syXEUfowqNfamKrRADrEs&pid=Api',
+                title='test', actions=[
                     URITemplateAction(
                         label='open in browser', uri='https://openweathermap.org/')
                 ])

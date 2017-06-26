@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-
+import datetime
 import errno
 
 import os
@@ -138,6 +138,8 @@ def regexMethodForHour(text):
     searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
     return searchObj.group(1)
 
+def methodForNow():
+    return int(regexMethodForHour(str(datetime.datetime.now().time())))-12
 
 def getJsonForWeather(city,token):
     try:
@@ -217,6 +219,11 @@ def handle_text_message(event):
         if text.startswith('/weather'):
             searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
             getJsonForWeather(searchObj.group(1),token)
+        if text.startswith('now'):
+            line_bot_api.reply_message(token,TextSendMessage(text=str(methodForNow())))
+
+
+
 
 
 

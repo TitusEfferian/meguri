@@ -245,13 +245,18 @@ def azureImage(text):
 def imageSearch(token,text):
     try:
         content = azureImage(text)
+        listForContent = []
+        listForThumbnail = []
+        for x in range(0, 5):
+            listForContent.append(content['value'][x]['contentUrl'])
+            listForThumbnail.append(content['value'][x]['thumbnailUrl'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
                 text=content['value'][0]['name'],
                 thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',
-                        data=text
+                        data=listForContent[0]
                     )
                 ])
 

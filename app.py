@@ -261,7 +261,7 @@ def handle_text_message(event):
             searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             videoMessage(token,searchObj.group(1))
         if text.startswith('debug'):
-            url = 'https://maps.googleapis.com/maps/api/streetview?size=1920x1080&fov=90&pano=FEpIJhSgOzoAAAQJOQCL3w&heading=235&pitch=10&key=AIzaSyACppscHMJnI6GvWDJToAtS9vAUbGVcDr8'
+            url = 'https://maltain360.com/pano.aspx?ref=110012535'
             line_bot_api.reply_message(token,ImageSendMessage(url,url))
 
     else:

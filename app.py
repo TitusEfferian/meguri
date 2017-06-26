@@ -154,7 +154,7 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=regexMethodForHour(jsonpart['list'][3]['dt_txt']) + ' - it is gonna be ' +
+                text=regexMethodForHour(int(jsonpart['list'][3]['dt_txt']-methodForNow())) + ' - it is gonna be ' +
                      jsonpart['list'][3]['weather'][0]['main'],
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
                     URITemplateAction(

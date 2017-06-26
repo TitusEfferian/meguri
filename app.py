@@ -239,7 +239,7 @@ def imageSearch(token,text):
                 thumbnail_image_url=content['value'][0]['thumbnailUrl'],
                 title=content['value'][0]['name'], actions=[
                     URITemplateAction(
-                        label='open in browser', uri=content['value'][0]['contentUrl'])
+                        label='open in browser', uri=content['value'][0]['thumbnailUrl'])
                 ])
         ])
         template_message = TemplateSendMessage(

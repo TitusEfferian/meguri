@@ -383,7 +383,7 @@ def handle_postback(event):
         contentImage = goo_shorten_url(content['value'][int(searchObj.group(2))]['contentUrl'])
         thumbnail = content['value'][int(searchObj.group(2))]['thumbnailUrl']
         line_bot_api.reply_message(
-            event.reply_token, ImageSendMessage(contentImage,thumbnail))
+            event.reply_token, TextSendMessage(text=contentImage))
 
 
 @handler.add(BeaconEvent)

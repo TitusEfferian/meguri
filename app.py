@@ -260,9 +260,11 @@ def handle_text_message(event):
         if text.startswith('/video'):
             searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             videoMessage(token,searchObj.group(1))
-        if text.startswith('debug'):
-            url = 'https://maltain360.com/pano.aspx?ref=110012535'
-            line_bot_api.reply_message(token,ImageSendMessage(url,url))
+        if text.startswith('/image'):
+            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
+            replaceText = searchObj.group(1).replace(' ','+')
+            line_bot_api.reply_message(token,TextSendMessage(text=replaceText))
+
 
     else:
         if isinstance(event.source, SourceGroup):
@@ -359,3 +361,4 @@ if __name__ == "__main__":
 
 
 #google-APi : AIzaSyACppscHMJnI6GvWDJToAtS9vAUbGVcDr8
+#azure api : db017bc371a34c488702df1801fc8f11

@@ -360,6 +360,7 @@ def handle_sticker_message(event):
 @handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
 def handle_content_message(event):
     if isinstance(event.message, ImageMessage):
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ini image'))
         ext = 'jpg'
     elif isinstance(event.message, VideoMessage):
         ext = 'mp4'
@@ -437,3 +438,4 @@ if __name__ == "__main__":
 #google-APi : AIzaSyACppscHMJnI6GvWDJToAtS9vAUbGVcDr8
 #azure api : db017bc371a34c488702df1801fc8f11
 #google api :AIzaSyBDB-GF8QsWHoy7_Kc-wiTHRnrAeiJs8A8
+#cloudinary.com : JsOgvhHvZyGIuPwv6jTPvoz2UYc

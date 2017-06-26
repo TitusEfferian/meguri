@@ -241,7 +241,7 @@ def imageSearch(token,text):
                         label='open in browser', uri=str(content['value'][0]['contentUrl'])),
                     PostbackTemplateAction(
                         label='download',
-                        data=str(content['value'][0]['contentUrl'])
+                        data='test'
                     )
                 ])
 

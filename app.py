@@ -139,7 +139,7 @@ def regexMethodForHour(text):
     return searchObj.group(1)
 
 def methodForNow():
-    return str(datetime.datetime.now().time())
+    return str(int(datetime.datetime.now().time()+7))
    # return int(regexMethodForHour(str(datetime.datetime.now().time())))-12
 
 def getJsonForWeather(city,token):

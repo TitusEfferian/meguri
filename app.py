@@ -136,7 +136,10 @@ def getJson(nickname, mode, token):
 
 def regexMethodForHour(text):
     searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
-    return int(searchObj.group(1))
+    number = int(searchObj)
+    if number<=12:
+        number+=24
+    return int(number)
 def methodForNow():
     time = int(datetime.datetime.now().hour+7)
     if time >=24:

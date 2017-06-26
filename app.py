@@ -11,7 +11,7 @@ import re
 import tempfile
 from urllib.error import HTTPError
 
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 
 from flask import Flask, request, abort, json
 
@@ -227,6 +227,17 @@ def videoMessage(token,text):
         if err.code == 500:
            line_bot_api.reply_message(token,TextSendMessage(text='video not supported'))
 
+def imageSearch(token,text):
+    try:
+        req = Request('https://api.cognitive.microsoft.com/bing/v5.0/images/search?q='+text)
+        req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
+        resp = urlopen(req)
+        content = json.loads(resp.read())
+        line_bot_api.reply_message(token,TextSendMessage(text=content['value'][0]['name']))
+    except HTTPError as err:
+        if err.code == 400:
+            line_bot_api.reply_message(token,TextSendMessage(text='not found'))
+
 
 
 
@@ -263,7 +274,7 @@ def handle_text_message(event):
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')
-            line_bot_api.reply_message(token,TextSendMessage(text=replaceText))
+            imageSearch(token,replaceText)
 
 
     else:

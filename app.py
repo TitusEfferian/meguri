@@ -239,30 +239,6 @@ def imageSearch(token,text):
                 thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
                     URITemplateAction(
                         label='open in browser', uri=str(content['value'][0]['contentUrl']))
-                ]),
-            CarouselColumn(
-                text=content['value'][1]['name'],
-                thumbnail_image_url=str(content['value'][1]['thumbnailUrl']), actions=[
-                    URITemplateAction(
-                        label='open in browser', uri=str(content['value'][1]['contentUrl']))
-                ]),
-            CarouselColumn(
-                text=content['value'][2]['name'],
-                thumbnail_image_url=str(content['value'][2]['thumbnailUrl']), actions=[
-                    URITemplateAction(
-                        label='open in browser', uri=str(content['value'][2]['contentUrl']))
-                ]),
-            CarouselColumn(
-                text=content['value'][3]['name'],
-                thumbnail_image_url=str(content['value'][3]['thumbnailUrl']), actions=[
-                    URITemplateAction(
-                        label='open in browser', uri=str(content['value'][3]['contentUrl']))
-                ]),
-            CarouselColumn(
-                text=content['value'][4]['name'],
-                thumbnail_image_url=str(content['value'][4]['thumbnailUrl']), actions=[
-                    URITemplateAction(
-                        label='open in browser', uri=str(content['value'][4]['contentUrl']))
                 ])
 
         ])

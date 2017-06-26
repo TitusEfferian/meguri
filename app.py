@@ -372,7 +372,7 @@ def handle_postback(event):
         resp = urlopen(req)
         content = json.loads(resp.read())
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.postback.data))
+            event.reply_token, ImageSendMessage('https://tse3.mm.bing.net/th?id=OIP.dZJw6syXEUfowqNfamKrRADrEs&pid=Api','https://tse3.mm.bing.net/th?id=OIP.dZJw6syXEUfowqNfamKrRADrEs&pid=Api'))
 
 
 @handler.add(BeaconEvent)

@@ -235,19 +235,24 @@ def goo_shorten_url(url):
     r = requests.post(post_url, data=json.dumps(payload), headers=headers)
     jsonpart = r.json()
     return jsonpart['id']
+def azureImage(text):
+    req = Request('https://api.cognitive.microsoft.com/bing/v5.0/images/search?q=' + text)
+    req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
+    resp = urlopen(req)
+    content = json.loads(resp.read())
+    return content
 
 def imageSearch(token,text):
     try:
-        req = Request('https://api.cognitive.microsoft.com/bing/v5.0/images/search?q='+text)
-        req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
-        resp = urlopen(req)
-        content = json.loads(resp.read())
+        content = azureImage(text)
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
                 text=content['value'][0]['name'],
-                thumbnail_image_url=goo_shorten_url(content['value'][0]['thumbnailUrl']), actions=[
-                    URITemplateAction(
-                        label='open in browser', uri=str(content['value'][0]['contentUrl']))
+                thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
+                    PostbackTemplateAction(
+                        label='download',
+                        data=text
+                    )
                 ])
 
         ])

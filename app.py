@@ -239,14 +239,18 @@ def imageSearch(token,text):
                 thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
                     URITemplateAction(
                         label='open in browser', uri=str(content['value'][0]['contentUrl']))
+                ]),
+            CarouselColumn(
+                text=content['value'][1]['name'],
+                thumbnail_image_url=str(content['value'][1]['thumbnailUrl']), actions=[
+                    URITemplateAction(
+                        label='open in browser', uri=str(content['value'][1]['contentUrl']))
                 ])
 
         ])
         template_message = TemplateSendMessage(
             alt_text='meguri sent a photo.', template=carousel_template)
         line_bot_api.reply_message(token, template_message)
-
-       # line_bot_api.reply_message(token,[TextSendMessage(text=content['value'][0]['contentUrl']),TextSendMessage(text=content['value'][0]['thumbnailUrl'])])
     except HTTPError as err:
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='not found'))

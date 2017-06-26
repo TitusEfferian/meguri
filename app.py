@@ -135,11 +135,11 @@ def getJson(nickname, mode, token):
 
 
 def regexMethodForHour(text):
-    searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
+    searchObj = re.search(r'(.*?):',text, re.M | re.I)
     return searchObj.group(1)
 
 def methodForNow():
-    return str(int(datetime.datetime.now().time()+7))
+    return regexMethodForHour(str(datetime.datetime.now().time()))
    # return int(regexMethodForHour(str(datetime.datetime.now().time())))-12
 
 def getJsonForWeather(city,token):

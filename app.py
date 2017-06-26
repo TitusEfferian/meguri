@@ -239,7 +239,7 @@ def imageSearch(token,text):
                 thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
                     PostbackTemplateAction(
                         label='download',
-                        data='ping'
+                        data=text
                     )
                 ])
 
@@ -367,8 +367,12 @@ def handle_leave():
 @handler.add(PostbackEvent)
 def handle_postback(event):
     if len(event.postback.data) > 0:
+        req = Request('https://api.cognitive.microsoft.com/bing/v5.0/images/search?q=' + event.postback.data)
+        req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
+        resp = urlopen(req)
+        content = json.loads(resp.read())
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='pong'))
+            event.reply_token, ImageSendMessage(content['value'][0]['contentUrl'],content['value'][0]['thumbnailUrl']))
 
 
 @handler.add(BeaconEvent)

@@ -230,6 +230,7 @@ def videoMessage(token,text):
 
 
 
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
@@ -259,9 +260,9 @@ def handle_text_message(event):
         if text.startswith('/video'):
             searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             videoMessage(token,searchObj.group(1))
-
-
-
+        if text.startswith('debug'):
+            url = 'https://maps.googleapis.com/maps/api/streetview?size=1920x1080&fov=90&pano=FEpIJhSgOzoAAAQJOQCL3w&heading=235&pitch=10&key=AIzaSyACppscHMJnI6GvWDJToAtS9vAUbGVcDr8'
+            line_bot_api.reply_message(token,ImageSendMessage(url,url))
 
     else:
         if isinstance(event.source, SourceGroup):
@@ -355,3 +356,6 @@ def handle_beacon(event):
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
+
+#google-APi : AIzaSyACppscHMJnI6GvWDJToAtS9vAUbGVcDr8

@@ -242,15 +242,14 @@ def azureImage(text):
     content = json.loads(resp.read())
     return content
 
-listForContent = []
-listForThumbnail = []
+
 def imageSearch(token,text):
     try:
         content = azureImage(text)
-        listForContent = None
-        listForThumbnail = None
+        listForContent = []
+        listForThumbnail = []
         for x in range(0, 5):
-            listForContent.append(content['value'][x]['contentUrl'])
+            goo_shorten_url(listForContent.append(content['value'][x]['contentUrl']))
             listForThumbnail.append(content['value'][x]['thumbnailUrl'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
@@ -258,7 +257,7 @@ def imageSearch(token,text):
                 thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',
-                        data='0'
+                        data=listForContent[0]
                     )
                 ])
 
@@ -385,7 +384,7 @@ def handle_leave():
 def handle_postback(event):
     if len(event.postback.data) > 0:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=listForContent[int(event.postback.data)]))
+            event.reply_token, TextSendMessage(text=event.postback.data))
 
 
 @handler.add(BeaconEvent)

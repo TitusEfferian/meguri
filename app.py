@@ -138,7 +138,7 @@ def regexMethodForHour(text):
     searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
     return searchObj.group(1)
 def methodForNow():
-    time = int(datetime.datetime.now().hour+7)
+    time = int(datetime.datetime.now().hour)
     if time >=24:
         time-=24
     else:

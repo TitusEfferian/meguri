@@ -235,7 +235,7 @@ def imageSearch(token,text):
         content = json.loads(resp.read())
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text='test',
+                text=str(content['value'][0]['name']),
                 thumbnail_image_url='https://tse3.mm.bing.net/th?id=OIP.dZJw6syXEUfowqNfamKrRADrEs&pid=Api',
                 title='test', actions=[
                     URITemplateAction(

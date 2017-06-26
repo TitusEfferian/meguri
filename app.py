@@ -157,7 +157,7 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=str(int(regexMethodForHour(jsonpart['list'][3]['dt_txt'])-methodForNow())) + ' hours from now, it is gonna be ' +
+                text=jsonpart['list'][3]['dt_txt'] + ' it is gonna be ' +
                      jsonpart['list'][3]['weather'][0]['main'], thumbnail_image_url='https://openweathermap.org/img/w/'+jsonpart['list'][3]['weather'][0][
                       'icon']+'.png',
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
@@ -334,6 +334,7 @@ def handle_text_message(event):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')
             imageSearch(token,replaceText)
+
 
 
     else:

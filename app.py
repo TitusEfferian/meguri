@@ -241,10 +241,10 @@ def imageSearch(token,text):
                         label='open in browser', uri=str(content['value'][0]['contentUrl']))
                 ]),
             CarouselColumn(
-                text=content['value'][1]['name'],
-                thumbnail_image_url=str(content['value'][1]['thumbnailUrl']), actions=[
+                text=content['value'][0]['name'],
+                thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
                     URITemplateAction(
-                        label='open in browser', uri=str(content['value'][1]['contentUrl']))
+                        label='open in browser', uri=str(content['value'][0]['contentUrl']))
                 ])
 
         ])

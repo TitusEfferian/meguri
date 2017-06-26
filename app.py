@@ -246,20 +246,21 @@ def azureImage(text):
 def imageSearch(token,text):
     try:
         content = azureImage(text)
+
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=content['value'][0]['name'],
+                text='a',
                 thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
-                        label='download',
+                        label='a',
                         data=text+':'+'0'
                     )
                 ]),
             CarouselColumn(
-                text=content['value'][1]['name'],
+                text='b',
                 thumbnail_image_url=content['value'][1]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
-                        label='download',
+                        label='b',
                         data=text + ':' + '1'
                     )
                 ])

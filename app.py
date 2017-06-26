@@ -372,7 +372,7 @@ def handle_postback(event):
         resp = urlopen(req)
         content = json.loads(resp.read())
         line_bot_api.reply_message(
-            event.reply_token, ImageSendMessage(content['value'][0]['contentUrl'],content['value'][0]['thumbnailUrl']))
+            event.reply_token, TextSendMessage(text=event.postback.data))
 
 
 @handler.add(BeaconEvent)

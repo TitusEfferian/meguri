@@ -294,7 +294,7 @@ def imageSearch(token,text):
             alt_text='meguri sent a photo.', template=carousel_template)
         line_bot_api.reply_message(token, template_message)
     except HTTPError as err:
-        if err.code == 400:
+        if err.code:
             line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
 

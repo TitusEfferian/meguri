@@ -261,7 +261,7 @@ def handle_text_message(event):
             searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             videoMessage(token,searchObj.group(1))
         if text.startswith('/image'):
-            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
+            searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')
             line_bot_api.reply_message(token,TextSendMessage(text=replaceText))
 

@@ -139,7 +139,7 @@ def regexMethodForHour(text):
     number = int(searchObj)
     if number<=12:
         number+=24
-    return int(number)
+    return number
 def methodForNow():
     time = int(datetime.datetime.now().hour+7)
     if time >=24:

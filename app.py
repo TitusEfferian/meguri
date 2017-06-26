@@ -233,7 +233,7 @@ def imageSearch(token,text):
         req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
         resp = urlopen(req)
         content = json.loads(resp.read())
-        line_bot_api.reply_message(token,TextSendMessage(text=content['value'][0]['name']))
+        line_bot_api.reply_message(token,TextSendMessage(text=content['value'][0]['contentUrl']))
     except HTTPError as err:
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='not found'))

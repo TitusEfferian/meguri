@@ -234,7 +234,7 @@ def imageSearch(token,text):
         resp = urlopen(req)
         content = json.loads(resp.read())
 
-        line_bot_api.reply_message(token,TextSendMessage(text=content['value'][0]['contentUrl']))
+        line_bot_api.reply_message(token,[TextSendMessage(text=content['value'][0]['contentUrl']),TextSendMessage(text=content['value'][0]['thumbnailUrl'])])
     except HTTPError as err:
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='not found'))

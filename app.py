@@ -360,7 +360,7 @@ def handle_sticker_message(event):
 @handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
 def handle_content_message(event):
     if isinstance(event.message, ImageMessage):
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ini image'))
+        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ini image'))
         ext = 'jpg'
     elif isinstance(event.message, VideoMessage):
         ext = 'mp4'

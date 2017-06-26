@@ -242,6 +242,7 @@ def azureImage(text):
     content = json.loads(resp.read())
     return content
 
+
 def imageSearch(token,text):
     try:
         content = azureImage(text)
@@ -256,7 +257,7 @@ def imageSearch(token,text):
                 thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',
-                        data=listForContent[0]
+                        data=text
                     )
                 ])
 

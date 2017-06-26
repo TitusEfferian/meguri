@@ -378,12 +378,12 @@ def handle_leave():
 @handler.add(PostbackEvent)
 def handle_postback(event):
     if len(event.postback.data) > 0:
-        searchObj = re.search(r'(.*?):(.*);', event.postback.data + ';', re.M | re.I)
-        content = azureImage(searchObj.group(1))
+        #searchObj = re.search(r'(.*?):(.*);', event.postback.data + ';', re.M | re.I)
+        #content = azureImage(searchObj.group(1))
         #contentImage = goo_shorten_url(content['value'][int(searchObj.group(2))]['contentUrl'])
         #thumbnail = content['value'][int(searchObj.group(2))]['thumbnailUrl']
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=searchObj.group(2)))
+            event.reply_token, TextSendMessage(text=event.postback.data)
 
 
 @handler.add(BeaconEvent)

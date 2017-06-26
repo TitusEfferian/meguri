@@ -271,6 +271,22 @@ def imageSearch(token,text):
                         label='download',
                         data=text + ':' + '2'
                     )
+                ]),
+            CarouselColumn(
+                text='c',
+                thumbnail_image_url=content['value'][3]['thumbnailUrl'], actions=[
+                    PostbackTemplateAction(
+                        label='download',
+                        data=text + ':' + '3'
+                    )
+                ]),
+            CarouselColumn(
+                text='c',
+                thumbnail_image_url=content['value'][4]['thumbnailUrl'], actions=[
+                    PostbackTemplateAction(
+                        label='download',
+                        data=text + ':' + '4'
+                    )
                 ])
 
         ])

@@ -239,7 +239,11 @@ def imageSearch(token,text):
                 thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
                     URITemplateAction(
                         label='open in browser', uri=str(content['value'][0]['contentUrl']))
-                ])
+                ]),
+            PostbackTemplateAction(
+                label='download',
+                data=str(content['value'][0]['contentUrl'])
+            )
         ])
         template_message = TemplateSendMessage(
             alt_text='meguri sent a photo.', template=carousel_template)
@@ -363,7 +367,7 @@ def handle_leave():
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
-    if event.postback.data == 'ping':
+    if len(event.postback.data) > 0:
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text='pong'))
 

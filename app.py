@@ -252,7 +252,7 @@ def imageSearch(token,text):
                 thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
                     PostbackTemplateAction(
                         label='download',
-                        data=text
+                        data=text+';'+'0'
                     )
                 ])
 
@@ -378,8 +378,12 @@ def handle_leave():
 @handler.add(PostbackEvent)
 def handle_postback(event):
     if len(event.postback.data) > 0:
+        searchObj = re.search(r'(.*?):(.*);', event.postback.data + ';', re.M | re.I)
+        content = azureImage(searchObj.group(1))
+        contentImage = goo_shorten_url(content['value'][int(searchObj.group(2))]['contentUrl'])
+        thumbnail = content['value'][int(searchObj.group(2))]['thumbnailUrl']
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.postback.data))
+            event.reply_token, ImageSendMessage(contentImage,thumbnail))
 
 
 @handler.add(BeaconEvent)

@@ -135,7 +135,7 @@ def getJson(nickname, mode, token):
 
 
 def regexMethodForHour(text):
-    searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
+    searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
     return searchObj.group(1)
 def methodForNow():
     time = int(datetime.datetime.now().hour)

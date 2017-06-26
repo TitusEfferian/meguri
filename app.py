@@ -235,13 +235,11 @@ def imageSearch(token,text):
         content = json.loads(resp.read())
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=content['value'][0]['name'],
                 thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
                     URITemplateAction(
                         label='open in browser', uri=str(content['value'][0]['contentUrl']))
                 ]),
             CarouselColumn(
-                text=content['value'][0]['name'],
                 thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
                     URITemplateAction(
                         label='open in browser', uri=str(content['value'][0]['contentUrl']))

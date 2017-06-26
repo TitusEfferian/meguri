@@ -143,7 +143,7 @@ def methodForNow():
         time-=24
     else:
         time+=7
-    return str(time)
+    return int(time)
 
 
 def getJsonForWeather(city,token):
@@ -154,7 +154,7 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=str(regexMethodForHour(jsonpart['list'][3]['dt_txt'])+methodForNow()) + ' - it is gonna be ' +
+                text=str(int(regexMethodForHour(jsonpart['list'][3]['dt_txt'])-methodForNow())) + ' - it is gonna be ' +
                      jsonpart['list'][3]['weather'][0]['main'],
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
                     URITemplateAction(

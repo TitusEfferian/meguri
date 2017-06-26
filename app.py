@@ -136,7 +136,7 @@ def getJson(nickname, mode, token):
 
 def regexMethodForHour(text):
     searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
-    return searchObj.group(1)
+    return int(searchObj.group(1))
 def methodForNow():
     time = int(datetime.datetime.now().hour)
     if time >=24:
@@ -159,37 +159,7 @@ def getJsonForWeather(city,token):
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
                     URITemplateAction(
                         label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
-                text=regexMethodForHour(jsonpart['list'][4]['dt_txt']) + ' - it is gonna be ' +
-                     jsonpart['list'][4]['weather'][0]['main'],
-                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
-                text=regexMethodForHour(jsonpart['list'][5]['dt_txt']) + ' - it is gonna be ' +
-                     jsonpart['list'][5]['weather'][0]['main'],
-                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
-                text=regexMethodForHour(jsonpart['list'][6]['dt_txt']) + ' - it is gonna be ' +
-                     jsonpart['list'][6]['weather'][0]['main'],
-                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
-                text=regexMethodForHour(jsonpart['list'][7]['dt_txt']) + ' - it is gonna be ' +
-                     jsonpart['list'][7]['weather'][0]['main'],
-                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-
-
+                ])
         ])
         template_message = TemplateSendMessage(
             alt_text='meguri sent a photo.', template=carousel_template)

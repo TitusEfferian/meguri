@@ -207,9 +207,12 @@ def getJsonForWeather(city,token):
         template_message = TemplateSendMessage(
             alt_text='meguri sent a photo.', template=carousel_template)
         line_bot_api.reply_message(token, template_message)
+
     except HTTPError as err:
         if err.code == 404:
             line_bot_api.reply_message(token,TextSendMessage(text='city not found'))
+def videoMessage(token,text):
+    line_bot_api.reply_message(token,TextSendMessage(text=text))
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
@@ -237,8 +240,9 @@ def handle_text_message(event):
         if text.startswith('/weather'):
             searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
             getJsonForWeather(searchObj.group(1),token)
-        if text.startswith('now'):
-            line_bot_api.reply_message(token,TextSendMessage(text=methodForNow()))
+        if text.startswith('/video'):
+            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
+            videoMessage(token,searchObj.group(1))
 
 
 

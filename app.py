@@ -236,7 +236,7 @@ def imageSearch(token,text):
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
                 text=content['value'][0]['hostPageDisplayUrl'],
-                thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
+                thumbnail_image_url=str(content['value'][0]['name']), actions=[
                     URITemplateAction(
                         label='open in browser', uri='http://www.bing.com/cr?IG=AF56CBA147B14CE19797CA6047DD54FB&CID=0C3E7E26F7006BF82577748BF6E56AA0&rd=1&h=CnPZ8WRKLte7GjgENY6QSotOJOt1CeJeRm2UveT0RJY&v=1&r=http%3a%2f%2fpre07.deviantart.net%2fc66f%2fth%2fpre%2fi%2f2016%2f195%2ff%2f8%2fhatsune_miku_v4x_render_by_katrinasantiago0627-da9y7yr.png&p=DevEx,5008.1')
                 ])

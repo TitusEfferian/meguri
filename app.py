@@ -237,10 +237,32 @@ def imageSearch(token,text):
             CarouselColumn(
                 text=content['value'][0]['name'],
                 thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
-                    PostbackTemplateAction(
-                        label='download',
-                        data=text
-                    )
+                    URITemplateAction(
+                        label='open in browser', uri=str(content['value'][0]['contentUrl']))
+                ]),
+            CarouselColumn(
+                text=content['value'][1]['name'],
+                thumbnail_image_url=str(content['value'][1]['thumbnailUrl']), actions=[
+                    URITemplateAction(
+                        label='open in browser', uri=str(content['value'][1]['contentUrl']))
+                ]),
+            CarouselColumn(
+                text=content['value'][2]['name'],
+                thumbnail_image_url=str(content['value'][2]['thumbnailUrl']), actions=[
+                    URITemplateAction(
+                        label='open in browser', uri=str(content['value'][2]['contentUrl']))
+                ]),
+            CarouselColumn(
+                text=content['value'][3]['name'],
+                thumbnail_image_url=str(content['value'][3]['thumbnailUrl']), actions=[
+                    URITemplateAction(
+                        label='open in browser', uri=str(content['value'][3]['contentUrl']))
+                ]),
+            CarouselColumn(
+                text=content['value'][4]['name'],
+                thumbnail_image_url=str(content['value'][4]['thumbnailUrl']), actions=[
+                    URITemplateAction(
+                        label='open in browser', uri=str(content['value'][4]['contentUrl']))
                 ])
 
         ])
@@ -367,12 +389,8 @@ def handle_leave():
 @handler.add(PostbackEvent)
 def handle_postback(event):
     if len(event.postback.data) > 0:
-        req = Request('https://api.cognitive.microsoft.com/bing/v5.0/images/search?q=' + event.postback.data)
-        req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
-        resp = urlopen(req)
-        content = json.loads(resp.read())
         line_bot_api.reply_message(
-            event.reply_token, ImageSendMessage('http://images.goodsmile.info/cgm/images/product/20160606/5715/39415/large/7aea9ff919d908f8c53b0a964bdb3e2a.jpg','https://tse3.mm.bing.net/th?id=OIP.dZJw6syXEUfowqNfamKrRADrEs&pid=Api'))
+            event.reply_token, TextSendMessage(text='pong'))
 
 
 @handler.add(BeaconEvent)

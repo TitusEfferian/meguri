@@ -46,7 +46,7 @@ from linebot.models import (
 
     UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent,
 
-    ImageSendMessage)
+    ImageSendMessage, VideoSendMessage)
 
 app = Flask(__name__)
 
@@ -211,8 +211,13 @@ def getJsonForWeather(city,token):
     except HTTPError as err:
         if err.code == 404:
             line_bot_api.reply_message(token,TextSendMessage(text='city not found'))
-def videoMessage(token,text):
-    line_bot_api.reply_message(token,TextSendMessage(text=text))
+def videoMessage(token):
+
+    video_message = VideoSendMessage(
+        original_content_url='https://r2---sn-4pgnuhxqp5-jb3y.googlevideo.com/videoplayback?itag=22&mime=video%2Fmp4&lmt=1498469256221364&id=o-AKN_skx19GDDQTiyTNo8tjRAcz3SlNwZX7kBkChEYRvA&ei=IeBQWa-5BofD8wS9pqSoAQ&expire=1498494081&dur=195.512&pl=21&source=youtube&requiressl=yes&ip=54.204.145.103&key=cms1&ipbits=0&ratebypass=yes&signature=2125F28138AFB91611EC14C86D534226F82CA8B4.31F7EB3317055099FC9A8807BC204FDD29CA9FBA&sparams=dur,ei,expire,id,initcwndbps,ip,ipbits,ipbypass,itag,lmt,mime,mip,mm,mn,ms,mv,pl,ratebypass,requiressl,source&redirect_counter=1&req_id=f2e91749714aa3ee&cms_redirect=yes&ipbypass=yes&mip=139.193.98.13&mm=31&mn=sn-4pgnuhxqp5-jb3y&ms=au&mt=1498472557&mv=m',
+        preview_image_url='https://i.ytimg.com/vi/7nlpWJPRMPM/maxresdefault.jpg'
+    )
+    line_bot_api.reply_message(token,video_message)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
@@ -242,7 +247,7 @@ def handle_text_message(event):
             getJsonForWeather(searchObj.group(1),token)
         if text.startswith('/video'):
             searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
-            videoMessage(token,searchObj.group(1))
+            videoMessage(token)
 
 
 

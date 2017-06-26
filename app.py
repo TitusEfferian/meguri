@@ -138,7 +138,12 @@ def regexMethodForHour(text):
     searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
     return searchObj.group(1)
 def methodForNow():
-    return str(int(datetime.datetime.now().hour+7))
+    time = int(datetime.datetime.now().hour+7)
+    if time >=24:
+        time-=24
+    else:
+        time+=7
+    return str(time)
 
 
 def getJsonForWeather(city,token):

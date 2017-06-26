@@ -13,6 +13,7 @@ from urllib.error import HTTPError
 
 from urllib.request import urlopen, Request
 
+import requests
 from flask import Flask, request, abort, json
 
 
@@ -227,6 +228,14 @@ def videoMessage(token,text):
         if err.code == 500:
            line_bot_api.reply_message(token,TextSendMessage(text='video not supported'))
 
+def goo_shorten_url(url):
+    post_url = 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyBDB-GF8QsWHoy7_Kc-wiTHRnrAeiJs8A8'
+    payload = {'longUrl': url}
+    headers = {'content-type': 'application/json'}
+    r = requests.post(post_url, data=json.dumps(payload), headers=headers)
+    jsonpart = r.json()
+    return jsonpart['id']
+
 def imageSearch(token,text):
     try:
         req = Request('https://api.cognitive.microsoft.com/bing/v5.0/images/search?q='+text)
@@ -235,12 +244,8 @@ def imageSearch(token,text):
         content = json.loads(resp.read())
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
-                    URITemplateAction(
-                        label='open in browser', uri=str(content['value'][0]['contentUrl']))
-                ]),
-            CarouselColumn(
-                thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
+                text=content['value'][0]['name'],
+                thumbnail_image_url=goo_shorten_url(content['value'][0]['thumbnailUrl']), actions=[
                     URITemplateAction(
                         label='open in browser', uri=str(content['value'][0]['contentUrl']))
                 ])
@@ -388,3 +393,4 @@ if __name__ == "__main__":
 
 #google-APi : AIzaSyACppscHMJnI6GvWDJToAtS9vAUbGVcDr8
 #azure api : db017bc371a34c488702df1801fc8f11
+#google api :AIzaSyBDB-GF8QsWHoy7_Kc-wiTHRnrAeiJs8A8

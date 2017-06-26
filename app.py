@@ -239,7 +239,7 @@ def imageSearch(token,text):
                 thumbnail_image_url=str(content['value'][0]['thumbnailUrl']), actions=[
                     PostbackTemplateAction(
                         label='download',
-                        data=str(content['value'][0]['contentUrl'])
+                        data='ping'
                     )
                 ])
 

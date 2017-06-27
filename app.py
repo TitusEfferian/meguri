@@ -386,9 +386,25 @@ def methodForHelp(token):
     carousel_template = CarouselTemplate(columns=[
         CarouselColumn(
             text='under development for personal amusement by titus efferian and kato@linuxsec.org', actions=[
-                URITemplateAction(
-                    label='download',
-                    uri='https://www.google.co.id/'
+                PostbackTemplateAction(
+                    label='instagram',
+                    data='ping'
+                ),
+                PostbackTemplateAction(
+                    label='youtube',
+                    data='ping'
+                ),
+                PostbackTemplateAction(
+                    label='image',
+                    data='ping'
+                ),
+                PostbackTemplateAction(
+                    label='osu',
+                    data='ping'
+                ),
+                PostbackTemplateAction(
+                    label='bukalapak',
+                    data='ping'
                 )
             ])
     ])

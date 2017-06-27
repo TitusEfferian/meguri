@@ -476,13 +476,9 @@ def handle_text_message(event):
             resp = urlopen(req)
             content = json.loads(resp.read())
             link = str(content['value'][randint(0, len(content['value']))]['contentUrl'])
-
-            used = []
-            randomize = 0
-            while (videoMessageForSearchAPI(token,link)=='0' and randomize not in used):
-                randomize = randint(0, len(content['value']))
-                link=str(content['value'][randomize]['contentUrl'])
-                used.append(randomize)
+            
+            while (videoMessageForSearchAPI(token,link)=='0'):
+                link=str(content['value'][randint(0, len(content['value']))]['contentUrl'])
             videoMessage(token,link)
 
         if text.startswith('/image'):

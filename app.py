@@ -460,7 +460,8 @@ def handle_text_message(event):
             req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
             resp = urlopen(req)
             content = json.loads(resp.read())
-            line_bot_api.reply_message(token,TextSendMessage(text=str(content['value'][0]['contentUrl'])))
+            videoMessage(token,str(content['value'][0]['contentUrl']))
+
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')

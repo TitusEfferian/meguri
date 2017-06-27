@@ -316,8 +316,20 @@ def stalkInstagram(token,text):
                 used.append(add)
                 result.append(add)
 
-            imageurl = jsonpart['user']['media']['nodes'][randint(0,12)]['thumbnail_src']
-            line_bot_api.reply_message(token,ImageSendMessage(imageurl,imageurl))
+            carousel_template = CarouselTemplate(columns=[
+                CarouselColumn(
+                    text=text,
+                    thumbnail_image_url=jsonpart['user']['media']['nodes'][0]['thumbnail_src'], actions=[
+                        URITemplateAction(
+                            label='download',
+                            uri=jsonpart['user']['media']['nodes'][0]['thumbnail_src']
+                        )
+                    ])
+
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='meguri sent a photo.', template=carousel_template)
+            line_bot_api.reply_message(token, template_message)
     except HTTPError as err:
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='user not found'))

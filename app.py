@@ -229,6 +229,12 @@ def videoMessage(token,text):
     except HTTPError as err:
         if err.code == 500:
            line_bot_api.reply_message(token,TextSendMessage(text='video not supported'))
+def videoMessageForSearch(token,text):
+    req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q=' + text)
+    req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
+    resp = urlopen(req)
+    content = json.loads(resp.read())
+    videoMessage(token,str(content['value'][0]['contentUrl']))
 
 def goo_shorten_url(url):
     post_url = 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyBDB-GF8QsWHoy7_Kc-wiTHRnrAeiJs8A8'
@@ -456,11 +462,8 @@ def handle_text_message(event):
         if text.startswith('video'):
             searchObj = re.search(r'video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
-            req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q='+replaceText)
-            req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
-            resp = urlopen(req)
-            content = json.loads(resp.read())
-            videoMessage(token,str(content['value'][0]['contentUrl']))
+            
+            videoMessageForSearch(token,replaceText)
 
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)

@@ -383,13 +383,13 @@ def stalkInstagram(token,text):
 
 def azureVideo(token,text):
     try:
-        textEncode = text.replace(' ', '+')
-        req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q='+textEncode)
+
+        req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q='+text)
         req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
         resp = urlopen(req)
         content = json.loads(resp.read())
         #videoMessage(token,content['value'][0]['contentUrl'])
-        line_bot_api.reply_message(token,TextSendMessage(text=textEncode))
+        line_bot_api.reply_message(token,TextSendMessage(text=text))
 
     except HTTPError as err:
         if err.code == 400:
@@ -468,7 +468,8 @@ def handle_text_message(event):
             videoMessage(token,searchObj.group(1))
         if text.startswith('/video2'):
             searchObj = re.search(r'/video2 (.*?);', text + ';', re.M | re.I)
-            azureVideo(token,searchObj.group(1))
+            replaceText = searchObj.group(1).replace(' ', '+')
+            azureVideo(token,replaceText)
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')

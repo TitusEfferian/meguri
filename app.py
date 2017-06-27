@@ -307,29 +307,45 @@ def stalkInstagram(token,text):
         if jsonpart['user']['is_private'] == 'true':
             line_bot_api.reply_message(token,TextSendMessage(text='user is private'))
         else:
-            result = []
-            used = []
-            for x in range(0, 12):
-                add = int(randint(0, 12))
-                while (add in used):
+            if len(jsonpart['user']['media']['nodes'])<12:
+                carousel_template = CarouselTemplate(columns=[
+                    CarouselColumn(
+                        text=text,
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][randint(0,len(jsonpart['user']['media']['nodes']))]['thumbnail_src'], actions=[
+                            URITemplateAction(
+                                label='download',
+                                uri=jsonpart['user']['media']['nodes'][randint(0,len(jsonpart['user']['media']['nodes']))]['thumbnail_src']
+                            )
+                        ])
+                ])
+                template_message = TemplateSendMessage(
+                    alt_text='meguri sent a photo.', template=carousel_template)
+                line_bot_api.reply_message(token, template_message)
+
+            else:
+                result = []
+                used = []
+                for x in range(0, 12):
                     add = int(randint(0, 12))
-                used.append(add)
-                result.append(add)
+                    while (add in used):
+                        add = int(randint(0, 12))
+                    used.append(add)
+                    result.append(add)
 
-            carousel_template = CarouselTemplate(columns=[
-                CarouselColumn(
-                    text=text,
-                    thumbnail_image_url=jsonpart['user']['media']['nodes'][0]['thumbnail_src'], actions=[
-                        URITemplateAction(
-                            label='download',
-                            uri=jsonpart['user']['media']['nodes'][0]['thumbnail_src']
-                        )
-                    ])
+                carousel_template = CarouselTemplate(columns=[
+                    CarouselColumn(
+                        text=text,
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][0]['thumbnail_src'], actions=[
+                            URITemplateAction(
+                                label='download',
+                                uri=jsonpart['user']['media']['nodes'][0]['thumbnail_src']
+                            )
+                        ])
 
-            ])
-            template_message = TemplateSendMessage(
-                alt_text='meguri sent a photo.', template=carousel_template)
-            line_bot_api.reply_message(token, template_message)
+                ])
+                template_message = TemplateSendMessage(
+                    alt_text='meguri sent a photo.', template=carousel_template)
+                line_bot_api.reply_message(token, template_message)
     except HTTPError as err:
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='user not found'))

@@ -468,19 +468,6 @@ def handle_text_message(event):
         if text.startswith('/video https://'):
             searchObj = re.search(r'/video https://(.*?);', text + ';', re.M | re.I)
             videoMessage(token,'https://'+searchObj.group(1))
-        if text.startswith('/video'):
-            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
-            replaceText = searchObj.group(1).replace(' ', '+')
-            req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q=' + replaceText)
-            req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
-            resp = urlopen(req)
-            content = json.loads(resp.read())
-            link = str(content['value'][randint(0, len(content['value']))]['contentUrl'])
-
-            while (videoMessageForSearchAPI(token,link)=='0'):
-                link=str(content['value'][randint(0, len(content['value']))]['contentUrl'])
-            videoMessage(token,link)
-
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')
@@ -490,8 +477,8 @@ def handle_text_message(event):
             stalkInstagram(token,searchObj.group(1))
         if text.startswith('/help'):
             methodForHelp(token)
-        if text.startswith('debug'):
-            searchObj = re.search(r'debug (.*?);', text + ';', re.M | re.I)
+        if text.startswith('/video'):
+            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
             jsonurl = urlopen(
                 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=25')
@@ -499,7 +486,7 @@ def handle_text_message(event):
             link = 'https://www.youtube.com/watch?v='+str(jsonpart['items'][randint(0,25)]['id']['videoId'])
             while (videoMessageForSearchAPI(token,link)=='0'):
                 link='https://www.youtube.com/watch?v='+str(jsonpart['items'][randint(0,25)]['id']['videoId'])
-            videoMessage(token,link)
+            videoMessageForSearchAPI(token,link)
 
 
 

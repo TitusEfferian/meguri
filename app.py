@@ -468,8 +468,8 @@ def handle_text_message(event):
         if text.startswith('/video https://'):
             searchObj = re.search(r'/video https://(.*?);', text + ';', re.M | re.I)
             videoMessage(token,'https://'+searchObj.group(1))
-        if text.startswith('video'):
-            searchObj = re.search(r'video (.*?);', text + ';', re.M | re.I)
+        if text.startswith('/video'):
+            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
             req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q=' + replaceText)
             req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
@@ -583,7 +583,7 @@ def handle_postback(event):
                 text='search a product in one of biggest e-commerce in southeast asia BUKALAPAK\nexample:\n/bukalapak <productname>\n(/bukalapak zenfone 3)'))
         if event.postback.data == 'youtube':
             line_bot_api.reply_message(event.reply_token, TextSendMessage(
-                text='share a youtube video\nexample:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ'))
+                text='share or search youtube video\nexample:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\n/video hatsune miku'))
         if event.postback.data == 'image':
             line_bot_api.reply_message(event.reply_token, TextSendMessage(
                 text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))

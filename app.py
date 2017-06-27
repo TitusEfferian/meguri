@@ -384,10 +384,17 @@ def stalkInstagram(token,text):
 
 def methodForHelp(token):
     carousel_template = CarouselTemplate(columns=[
-        CarouselColumn(text='under development for personal amusement by titus efferian and kato@linuxsec.org',
-                       title='help')])
-    template_message = TemplateSendMessage(alt_text='meguri sent a chat',template=carousel_template)
-    line_bot_api.reply_message(token,template_message)
+        CarouselColumn(
+            text='under development for personal amusement by titus efferian and kato@linuxsec.org', actions=[
+                URITemplateAction(
+                    label='download',
+                    uri='https://www.google.co.id/'
+                )
+            ])
+    ])
+    template_message = TemplateSendMessage(
+        alt_text='meguri sent a photo.', template=carousel_template)
+    line_bot_api.reply_message(token, template_message)
 
 
 

@@ -493,9 +493,10 @@ def handle_text_message(event):
         if text.startswith('debug'):
             searchObj = re.search(r'debug (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
-            
-
-            line_bot_api.reply_message(token,TextSendMessage(text=replaceText))
+            jsonurl = urlopen(
+                'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=10')
+            jsonpart = json.loads(jsonurl.read())
+            line_bot_api.reply_message(token,TextSendMessage(text=str(jsonpart['items'][0]['id']['videoId'])))
 
 
 

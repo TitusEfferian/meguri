@@ -544,6 +544,23 @@ def handle_postback(event):
     if len(event.postback.data) > 0:
         if event.postback.data == 'developer':
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='under development for personal amusement by :\ntitus efferian (line id: adhistitus) and\nkato@linuxsec.org'))
+        if event.postback.data == 'instagram':
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(
+                text='stalk your instagram friends /stalk <username>\nexample: /stalk yingtze'))
+        if event.postback.data == 'osu':
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(
+                text='this command for osu player: /std /taiko /ctb /mania\nexample: /ctb deceitful'))
+        if event.postback.data == 'bukalapak':
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(
+                text='search a product in one of biggest e-commerce in southeast asia BUKALAPAK\nexample:/bukalapak <productname> (/bukalapak zenfone 3)'))
+        if event.postback.data == 'youtube':
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(
+                text='share a youtube video\nexample: /video https://www.youtube.com/watch?v=Vsc8uGxTlFQ'))
+        if event.postback.data == 'image':
+            line_bot_api.reply_message(event.reply_token, TextSendMessage(
+                text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <searh> (/image hatsune miku)'))
+
+
         else:
             searchObj = re.search(r'(.*?):(.*);', event.postback.data + ';', re.M | re.I)
             content = azureImage(searchObj.group(1))

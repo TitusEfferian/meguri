@@ -9,6 +9,7 @@ import re
 
 
 import tempfile
+from random import randint
 from urllib.error import HTTPError
 
 from urllib.request import urlopen, Request
@@ -299,6 +300,30 @@ def imageSearch(token,text):
             line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
 
+def stalkInstagram(token,text):
+    try:
+        jsonurl = urlopen('https://www.instagram.com/'+text+'/?__a=1')
+        jsonpart = json.loads(jsonurl.read())
+        if jsonpart['user']['is_private'] == 'true':
+            line_bot_api.reply_message(token,TextSendMessage(text='user is private'))
+        else:
+            result = []
+            used = []
+            for x in range(0, 12):
+                add = int(randint(0, 12))
+                while (add in used):
+                    add = int(randint(0, 12))
+                used.append(add)
+                result.append(add)
+
+            imageurl = jsonpart['user']['media']['nodes'][randint(0,12)]['thumbnail_src']
+            line_bot_api.reply_message(token,ImageSendMessage(imageurl,imageurl))
+    except HTTPError as err:
+        if err.code == 400:
+            line_bot_api.reply_message(token,TextSendMessage(text='user not found'))
+
+
+
 
 
 
@@ -337,7 +362,7 @@ def handle_text_message(event):
             imageSearch(token,replaceText)
         if text.startswith('/stalk'):
             searchObj = re.search(r'/stalk (.*?);', text + ';', re.M | re.I)
-            line_bot_api.reply_message(token,TextSendMessage(text=searchObj.group(1)))
+            stalkInstagram(token,searchObj.group(1))
 
 
 

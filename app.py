@@ -383,7 +383,6 @@ def stalkInstagram(token,text):
 
 def azureVideo(token,text):
     try:
-
         req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q='+text)
         req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
         resp = urlopen(req)
@@ -393,7 +392,7 @@ def azureVideo(token,text):
 
     except HTTPError as err:
         if err.code == 400:
-            print('not found')
+            line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
 def methodForHelp(token):
     carousel_template = CarouselTemplate(columns=[

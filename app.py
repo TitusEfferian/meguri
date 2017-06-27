@@ -497,7 +497,10 @@ def handle_text_message(event):
                 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=10')
             jsonpart = json.loads(jsonurl.read())
             link = 'https://www.youtube.com/watch?v='+str(jsonpart['items'][randint(0,10)]['id']['videoId'])
-            line_bot_api.reply_message(token,TextSendMessage(text=link))
+            while (videoMessageForSearchAPI(token,link)=='0'):
+                link='https://www.youtube.com/watch?v='+str(jsonpart['items'][randint(0,10)]['id']['videoId'])
+            videoMessage(token,link)
+            
 
 
 

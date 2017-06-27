@@ -229,26 +229,7 @@ def videoMessage(token,text):
         if err.code == 500:
            line_bot_api.reply_message(token,TextSendMessage(text='video not supported'))
 
-def videoMessageForSearchAPI(token,text):
-    try:
-        jsonurl = urlopen('http://megumin-yt.herokuapp.com/api/info?url=' + text)
-        jsonpart = json.loads(jsonurl.read())
-        content = jsonpart['info']['url']
-        thumbnail = jsonpart['info']['thumbnail']
-        video_message = VideoSendMessage(
-            original_content_url=content,
-            preview_image_url=thumbnail
-        )
-        return line_bot_api.reply_message(token, video_message)
-    except HTTPError as err:
-        if err.code == 500:
-            return '0'
-def videoMessageForSearch(text):
-    req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q=' + text)
-    req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
-    resp = urlopen(req)
-    content = json.loads(resp.read())
-    return str(content['value'][randint(0,len(content['value']))]['contentUrl'])
+
 
 def goo_shorten_url(url):
     post_url = 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyBDB-GF8QsWHoy7_Kc-wiTHRnrAeiJs8A8'
@@ -483,7 +464,7 @@ def handle_text_message(event):
             link = str(content['value'][randint(0, len(content['value']))]['contentUrl'])
             while (videoMessageForSearchAPI(token,link)=='0'):
                 link=str(content['value'][randint(0, len(content['value']))]['contentUrl'])
-            videoMessageForSearchAPI(token,link)
+            videoMessage(token,link)
 
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)

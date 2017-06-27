@@ -385,33 +385,33 @@ def stalkInstagram(token,text):
 def methodForHelp(token):
     carousel_template = CarouselTemplate(columns=[
         CarouselColumn(
-            text='   ', actions=[
+            text=' ', actions=[
                 PostbackTemplateAction(
                     label='instagram',
-                    data='ping'
+                    data='instagram'
                 ),
                 PostbackTemplateAction(
                     label='youtube',
-                    data='ping'
+                    data='youtube'
                 ),
                 PostbackTemplateAction(
                     label='image',
-                    data='ping'
+                    data='image'
                 )
             ]),
         CarouselColumn(
-            text='   ', actions=[
+            text=' ', actions=[
                 PostbackTemplateAction(
                     label='bukalapak',
-                    data='ping'
+                    data='bukalapak'
                 ),
                 PostbackTemplateAction(
                     label='osu',
-                    data='ping'
+                    data='osu'
                 ),
                 PostbackTemplateAction(
                     label='developer',
-                    data='ping'
+                    data='developer'
                 )
             ])
     ])
@@ -542,12 +542,15 @@ def handle_leave():
 @handler.add(PostbackEvent)
 def handle_postback(event):
     if len(event.postback.data) > 0:
-        searchObj = re.search(r'(.*?):(.*);', event.postback.data + ';', re.M | re.I)
-        content = azureImage(searchObj.group(1))
-        contentImage = goo_shorten_url(content['value'][int(searchObj.group(2))]['contentUrl'])
-        thumbnail = content['value'][int(searchObj.group(2))]['thumbnailUrl']
-        line_bot_api.reply_message(
-            event.reply_token, ImageSendMessage(contentImage,thumbnail))
+        if event.postback.data == 'developer':
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='under development for personal amusement by :\ntitus efferian (line id: adhistitus) and\nkato@linuxsec.org'))
+        else:
+            searchObj = re.search(r'(.*?):(.*);', event.postback.data + ';', re.M | re.I)
+            content = azureImage(searchObj.group(1))
+            contentImage = goo_shorten_url(content['value'][int(searchObj.group(2))]['contentUrl'])
+            thumbnail = content['value'][int(searchObj.group(2))]['thumbnailUrl']
+            line_bot_api.reply_message(
+                event.reply_token, ImageSendMessage(contentImage,thumbnail))
 
 
 @handler.add(BeaconEvent)

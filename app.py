@@ -335,45 +335,44 @@ def stalkInstagram(token,text):
                 carousel_template = CarouselTemplate(columns=[
                     CarouselColumn(
                         text=text,
-                        thumbnail_image_url=jsonpart['user']['media']['nodes'][0]['thumbnail_src'], actions=[
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][result[0]]['thumbnail_src'], actions=[
                             URITemplateAction(
                                 label='download',
-                                uri=jsonpart['user']['media']['nodes'][0]['thumbnail_src']
+                                uri=jsonpart['user']['media']['nodes'][result[0]]['thumbnail_src']
                             )
                         ]),
                     CarouselColumn(
                         text=text,
-                        thumbnail_image_url=jsonpart['user']['media']['nodes'][1]['thumbnail_src'], actions=[
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][result[1]]['thumbnail_src'], actions=[
                             URITemplateAction(
                                 label='download',
-                                uri=jsonpart['user']['media']['nodes'][1]['thumbnail_src']
+                                uri=jsonpart['user']['media']['nodes'][result[1]]['thumbnail_src']
                             )
                         ]),
                     CarouselColumn(
                         text=text,
-                        thumbnail_image_url=jsonpart['user']['media']['nodes'][2]['thumbnail_src'], actions=[
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][result[2]]['thumbnail_src'], actions=[
                             URITemplateAction(
                                 label='download',
-                                uri=jsonpart['user']['media']['nodes'][2]['thumbnail_src']
+                                uri=jsonpart['user']['media']['nodes'][result[2]]['thumbnail_src']
                             )
                         ]),
                     CarouselColumn(
                         text=text,
-                        thumbnail_image_url=jsonpart['user']['media']['nodes'][3]['thumbnail_src'], actions=[
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][result[3]]['thumbnail_src'], actions=[
                             URITemplateAction(
                                 label='download',
-                                uri=jsonpart['user']['media']['nodes'][3]['thumbnail_src']
+                                uri=jsonpart['user']['media']['nodes'][result[3]]['thumbnail_src']
                             )
                         ]),
                     CarouselColumn(
                         text=text,
-                        thumbnail_image_url=jsonpart['user']['media']['nodes'][4]['thumbnail_src'], actions=[
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][result[4]]['thumbnail_src'], actions=[
                             URITemplateAction(
                                 label='download',
-                                uri=jsonpart['user']['media']['nodes'][4]['thumbnail_src']
+                                uri=jsonpart['user']['media']['nodes'][result[4]]['thumbnail_src']
                             )
                         ])
-
                 ])
                 template_message = TemplateSendMessage(
                     alt_text='meguri sent a photo.', template=carousel_template)

@@ -248,7 +248,7 @@ def videoMessageForSearch(text):
     req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
     resp = urlopen(req)
     content = json.loads(resp.read())
-    return str(content['value'][len(content['value'])]['contentUrl'])
+    return str(content['value'][randint(0,len(content['value']))]['contentUrl'])
 
 def goo_shorten_url(url):
     post_url = 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyBDB-GF8QsWHoy7_Kc-wiTHRnrAeiJs8A8'

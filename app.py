@@ -397,14 +397,6 @@ def methodForHelp(token):
                 PostbackTemplateAction(
                     label='image',
                     data='ping'
-                ),
-                PostbackTemplateAction(
-                    label='osu',
-                    data='ping'
-                ),
-                PostbackTemplateAction(
-                    label='bukalapak',
-                    data='ping'
                 )
             ])
     ])

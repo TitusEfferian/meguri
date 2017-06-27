@@ -249,7 +249,8 @@ def videoMessageForSearch(text):
     resp = urlopen(req)
     content = json.loads(resp.read())
     return str(content['value'][randint(0,len(content['value']))]['contentUrl'])
-
+def debug(token):
+    return line_bot_api.reply_message(token,TextSendMessage(text='debug'))
 def goo_shorten_url(url):
     post_url = 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyBDB-GF8QsWHoy7_Kc-wiTHRnrAeiJs8A8'
     payload = {'longUrl': url}
@@ -476,7 +477,8 @@ def handle_text_message(event):
         if text.startswith('video'):
             searchObj = re.search(r'video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
-            line_bot_api.reply_message(token,TextSendMessage(text=videoMessageForSearch(replaceText)))
+            link=videoMessageForSearch(replaceText)
+
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')
@@ -486,6 +488,8 @@ def handle_text_message(event):
             stalkInstagram(token,searchObj.group(1))
         if text.startswith('/help'):
             methodForHelp(token)
+        if text.startswith('/debug'):
+            debug(token)
 
 
 

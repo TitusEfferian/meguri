@@ -144,8 +144,7 @@ def regexMethodForHour(text):
     return number
 def methodForNow():
     time = int(datetime.datetime.now().hour+7)
-    if time >=24:
-        time-=24
+
     return int(time)
 
 
@@ -157,9 +156,11 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=jsonpart['list'][3]['dt_txt'] + ' it is gonna be ' +
-                     jsonpart['list'][3]['weather'][0]['main'], thumbnail_image_url='https://openweathermap.org/img/w/'+jsonpart['list'][3]['weather'][0][
-                      'icon']+'.png',
+                text=str(int(regexMethodForHour(
+                    jsonpart['list'][3]['dt_txt']) - methodForNow())) + ' hours from now, it is gonna be ' +
+                     jsonpart['list'][3]['weather'][0]['main'],
+                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][3]['weather'][0][
+                    'icon'] + '.png',
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
                     URITemplateAction(
                         label='open in browser', uri='https://openweathermap.org/')
@@ -334,6 +335,10 @@ def handle_text_message(event):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')
             imageSearch(token,replaceText)
+        if text.startswith('/stalk'):
+            searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
+            line_bot_api.reply_message(token,TextSendMessage(text=searchObj.group(1)))
+
 
 
 

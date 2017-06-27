@@ -476,9 +476,13 @@ def handle_text_message(event):
         if text.startswith('video'):
             searchObj = re.search(r'video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
-            link=videoMessageForSearch(replaceText)
+            req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q=' + replaceText)
+            req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
+            resp = urlopen(req)
+            content = json.loads(resp.read())
+            link = str(content['value'][randint(0, len(content['value']))]['contentUrl'])
             while (videoMessageForSearchAPI(token,link)=='0'):
-                link=videoMessageForSearch(replaceText)
+                link=str(content['value'][randint(0, len(content['value']))]['contentUrl'])
             videoMessageForSearchAPI(token,link)
 
         if text.startswith('/image'):

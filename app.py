@@ -414,8 +414,8 @@ def methodForHelp(token):
                     data='osu'
                 ),
                 PostbackTemplateAction(
-                    label='developer',
-                    data='developer'
+                    label='weather',
+                    data='weather'
                 )
             ])
     ])

@@ -490,12 +490,10 @@ def handle_text_message(event):
             stalkInstagram(token,searchObj.group(1))
         if text.startswith('/help'):
             methodForHelp(token)
-        if text.startswith('/video2'):
-            searchObj = re.search(r'/video2 (.*?);', text + ';', re.M | re.I)
+        if text.startswith('debug'):
+            searchObj = re.search(r'debug (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
-            jsonurl = urlopen(
-                'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=10')
-            jsonpart = json.loads(jsonurl.read())
+            
 
             line_bot_api.reply_message(token,TextSendMessage(text=replaceText))
 

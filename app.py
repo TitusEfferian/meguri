@@ -476,7 +476,7 @@ def handle_text_message(event):
             resp = urlopen(req)
             content = json.loads(resp.read())
             link = str(content['value'][randint(0, len(content['value']))]['contentUrl'])
-            
+
             while (videoMessageForSearchAPI(token,link)=='0'):
                 link=str(content['value'][randint(0, len(content['value']))]['contentUrl'])
             videoMessage(token,link)
@@ -490,6 +490,17 @@ def handle_text_message(event):
             stalkInstagram(token,searchObj.group(1))
         if text.startswith('/help'):
             methodForHelp(token)
+        if text.startswith('/video2'):
+            searchObj = re.search(r'/video2 (.*?);', text + ';', re.M | re.I)
+            replaceText = searchObj.group(1).replace(' ', '+')
+            jsonurl = urlopen(
+                'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=10')
+            jsonpart = json.loads(jsonurl.read())
+            link = 'https://www.youtube.com/watch?v=' + jsonpart['items'][randint(0,10)]['id']['videoId']
+            while (videoMessageForSearchAPI(token, link) == '0'):
+                link = 'https://www.youtube.com/watch?v=' + jsonpart['items'][randint(0, 10)]['id']['videoId']
+            videoMessage(token, link)
+
 
 
 

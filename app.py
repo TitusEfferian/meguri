@@ -385,7 +385,7 @@ def stalkInstagram(token,text):
 def methodForHelp(token):
     carousel_template = CarouselTemplate(columns=[
         CarouselColumn(
-            text='under development for personal amusement by titus efferian and kato@linuxsec.org', actions=[
+            title='help', actions=[
                 PostbackTemplateAction(
                     label='instagram',
                     data='ping'
@@ -397,9 +397,20 @@ def methodForHelp(token):
                 PostbackTemplateAction(
                     label='image',
                     data='ping'
-                ),
+                )
+            ]),
+        CarouselColumn(
+            title='help', actions=[
                 PostbackTemplateAction(
                     label='bukalapak',
+                    data='ping'
+                ),
+                PostbackTemplateAction(
+                    label='osu',
+                    data='ping'
+                ),
+                PostbackTemplateAction(
+                    label='developer',
                     data='ping'
                 )
             ])

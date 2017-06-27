@@ -389,7 +389,7 @@ def azureVideo(token,text):
         resp = urlopen(req)
         content = json.loads(resp.read())
         #videoMessage(token,content['value'][0]['contentUrl'])
-        line_bot_api.reply_message(token,TextSendMessage(text=content['value'][0]['contentUrl']))
+        line_bot_api.reply_message(token,TextSendMessage(text=textEncode))
 
     except HTTPError as err:
         if err.code == 400:

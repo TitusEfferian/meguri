@@ -336,7 +336,7 @@ def handle_text_message(event):
             replaceText = searchObj.group(1).replace(' ','+')
             imageSearch(token,replaceText)
         if text.startswith('/stalk'):
-            searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
+            searchObj = re.search(r'/stalk (.*?);', text + ';', re.M | re.I)
             line_bot_api.reply_message(token,TextSendMessage(text=searchObj.group(1)))
 
 

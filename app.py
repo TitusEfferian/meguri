@@ -382,6 +382,14 @@ def stalkInstagram(token,text):
             line_bot_api.reply_message(token,TextSendMessage(text='user not found'))
 
 
+def methodForHelp(token):
+    carousel_template = CarouselTemplate(columns=[
+        CarouselColumn(text='under development for personal amusement by titus efferian and kato@linuxsec.org',
+                       title='help')])
+    template_message = TemplateSendMessage(alt_text='meguri sent a chat',template=carousel_template)
+    line_bot_api.reply_message(token,template_message)
+
+
 
 
 
@@ -422,6 +430,8 @@ def handle_text_message(event):
         if text.startswith('/stalk'):
             searchObj = re.search(r'/stalk (.*?);', text + ';', re.M | re.I)
             stalkInstagram(token,searchObj.group(1))
+        if text.startswith('/help'):
+            methodForHelp()
 
 
 

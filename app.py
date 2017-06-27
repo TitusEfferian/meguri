@@ -239,18 +239,17 @@ def videoMessageForSearchAPI(token,text):
             original_content_url=content,
             preview_image_url=thumbnail
         )
-        line_bot_api.reply_message(token, video_message)
+        return line_bot_api.reply_message(token, video_message)
     except HTTPError as err:
         if err.code == 500:
-            line_bot_api.reply_message(token, TextSendMessage(text='video not supported'))
+            return '0'
 def videoMessageForSearch(text):
     req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q=' + text)
     req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
     resp = urlopen(req)
     content = json.loads(resp.read())
     return str(content['value'][randint(0,len(content['value']))]['contentUrl'])
-def debug(token):
-    return line_bot_api.reply_message(token,TextSendMessage(text='debug'))
+
 def goo_shorten_url(url):
     post_url = 'https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyBDB-GF8QsWHoy7_Kc-wiTHRnrAeiJs8A8'
     payload = {'longUrl': url}
@@ -478,6 +477,9 @@ def handle_text_message(event):
             searchObj = re.search(r'video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
             link=videoMessageForSearch(replaceText)
+            while (videoMessageForSearchAPI(token,link)=='0'):
+                link=videoMessageForSearch(replaceText)
+            videoMessageForSearchAPI(token,link)
 
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
@@ -488,8 +490,7 @@ def handle_text_message(event):
             stalkInstagram(token,searchObj.group(1))
         if text.startswith('/help'):
             methodForHelp(token)
-        if text.startswith('/debug'):
-            debug(token)
+
 
 
 

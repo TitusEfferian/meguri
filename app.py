@@ -431,7 +431,7 @@ def handle_text_message(event):
             searchObj = re.search(r'/stalk (.*?);', text + ';', re.M | re.I)
             stalkInstagram(token,searchObj.group(1))
         if text.startswith('/help'):
-            methodForHelp()
+            methodForHelp(token)
 
 
 

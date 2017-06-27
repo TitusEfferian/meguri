@@ -139,8 +139,7 @@ def getJson(nickname, mode, token):
 def regexMethodForHour(text):
     searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
     number = int(searchObj.group(1))
-    if number<=12:
-        number+=24
+    
 
     return number
 def methodForNow():
@@ -229,6 +228,21 @@ def videoMessage(token,text):
     except HTTPError as err:
         if err.code == 500:
            line_bot_api.reply_message(token,TextSendMessage(text='video not supported'))
+
+def videoMessageForSearchAPI(token,text):
+    try:
+        jsonurl = urlopen('http://megumin-yt.herokuapp.com/api/info?url=' + text)
+        jsonpart = json.loads(jsonurl.read())
+        content = jsonpart['info']['url']
+        thumbnail = jsonpart['info']['thumbnail']
+        video_message = VideoSendMessage(
+            original_content_url=content,
+            preview_image_url=thumbnail
+        )
+        line_bot_api.reply_message(token, video_message)
+    except HTTPError as err:
+        if err.code == 500:
+            line_bot_api.reply_message(token, TextSendMessage(text='video not supported'))
 def videoMessageForSearch(token,text):
     req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q=' + text)
     req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
@@ -462,9 +476,7 @@ def handle_text_message(event):
         if text.startswith('video'):
             searchObj = re.search(r'video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
-            
             videoMessageForSearch(token,replaceText)
-
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')

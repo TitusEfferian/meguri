@@ -397,10 +397,6 @@ def methodForHelp(token):
                 PostbackTemplateAction(
                     label='image',
                     data='image'
-                ),
-                PostbackTemplateAction(
-                    label='weather',
-                    data='weather'
                 )
             ]),
         CarouselColumn(

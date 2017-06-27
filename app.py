@@ -487,10 +487,9 @@ def handle_text_message(event):
             random = randint(0,5)
             link = 'https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
             while (videoMessageForSearchAPI(token,link)=='0'):
-                if random in used:
-                    random=randint(0,5)
-                else:
-                    used.append(random)
+                while random in used:
+                    random = randint(0, 5)
+                used.append(random)
                 link='https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
             videoMessageForSearchAPI(token,link)
 

@@ -381,18 +381,6 @@ def stalkInstagram(token,text):
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='user not found'))
 
-def azureVideo(token,text):
-    try:
-        req = Request('https://api.cognitive.microsoft.com/bing/v5.0/videos/search?q='+text)
-        req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
-        resp = urlopen(req)
-        content = json.loads(resp.read())
-        #videoMessage(token,content['value'][0]['contentUrl'])
-        line_bot_api.reply_message(token,TextSendMessage(text=text))
-
-    except HTTPError as err:
-        if err.code == 400:
-            line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
 def methodForHelp(token):
     carousel_template = CarouselTemplate(columns=[
@@ -468,7 +456,7 @@ def handle_text_message(event):
         if text.startswith('/video2'):
             searchObj = re.search(r'/video2 (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
-            azureVideo(token,replaceText)
+            line_bot_api.reply_message(token,TextSendMessage(text=replaceText))
         if text.startswith('/image'):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')

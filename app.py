@@ -583,7 +583,7 @@ def handle_postback(event):
                 text='search a product in one of biggest e-commerce in southeast asia BUKALAPAK\nexample:\n/bukalapak <productname>\n(/bukalapak zenfone 3)'))
         if event.postback.data == 'youtube':
             line_bot_api.reply_message(event.reply_token, TextSendMessage(
-                text='share or search youtube video\nexample:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\n/video hatsune miku'))
+                text='share or search youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\nexample 2:/video hatsune miku'))
         if event.postback.data == 'image':
             line_bot_api.reply_message(event.reply_token, TextSendMessage(
                 text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))

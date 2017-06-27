@@ -304,7 +304,7 @@ def stalkInstagram(token,text):
     try:
         jsonurl = urlopen('https://www.instagram.com/'+text+'/?__a=1')
         jsonpart = json.loads(jsonurl.read())
-        if jsonpart['user']['is_private'] == 'true':
+        if jsonpart['user']['is_private'] == True:
             line_bot_api.reply_message(token,TextSendMessage(text='user is private'))
         else:
             if len(jsonpart['user']['media']['nodes'])<12:
@@ -339,6 +339,38 @@ def stalkInstagram(token,text):
                             URITemplateAction(
                                 label='download',
                                 uri=jsonpart['user']['media']['nodes'][0]['thumbnail_src']
+                            )
+                        ]),
+                    CarouselColumn(
+                        text=text,
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][1]['thumbnail_src'], actions=[
+                            URITemplateAction(
+                                label='download',
+                                uri=jsonpart['user']['media']['nodes'][1]['thumbnail_src']
+                            )
+                        ]),
+                    CarouselColumn(
+                        text=text,
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][2]['thumbnail_src'], actions=[
+                            URITemplateAction(
+                                label='download',
+                                uri=jsonpart['user']['media']['nodes'][2]['thumbnail_src']
+                            )
+                        ]),
+                    CarouselColumn(
+                        text=text,
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][3]['thumbnail_src'], actions=[
+                            URITemplateAction(
+                                label='download',
+                                uri=jsonpart['user']['media']['nodes'][3]['thumbnail_src']
+                            )
+                        ]),
+                    CarouselColumn(
+                        text=text,
+                        thumbnail_image_url=jsonpart['user']['media']['nodes'][4]['thumbnail_src'], actions=[
+                            URITemplateAction(
+                                label='download',
+                                uri=jsonpart['user']['media']['nodes'][4]['thumbnail_src']
                             )
                         ])
 

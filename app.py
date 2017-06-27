@@ -497,7 +497,7 @@ def handle_text_message(event):
                 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=10')
             jsonpart = json.loads(jsonurl.read())
 
-            line_bot_api.reply_message(token,TextSendMessage(text=replaceText)
+            line_bot_api.reply_message(token,TextSendMessage(text=replaceText))
 
 
 

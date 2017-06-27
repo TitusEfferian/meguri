@@ -481,11 +481,11 @@ def handle_text_message(event):
             searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
             jsonurl = urlopen(
-                'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=25')
+                'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=5')
             jsonpart = json.loads(jsonurl.read())
-            link = 'https://www.youtube.com/watch?v='+str(jsonpart['items'][randint(0,25)]['id']['videoId'])
+            link = 'https://www.youtube.com/watch?v='+str(jsonpart['items'][randint(0,5)]['id']['videoId'])
             while (videoMessageForSearchAPI(token,link)=='0'):
-                link='https://www.youtube.com/watch?v='+str(jsonpart['items'][randint(0,25)]['id']['videoId'])
+                link='https://www.youtube.com/watch?v='+str(jsonpart['items'][randint(0,5)]['id']['videoId'])
             videoMessageForSearchAPI(token,link)
 
 

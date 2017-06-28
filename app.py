@@ -156,9 +156,7 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=str(int(regexMethodForHour(
-                    jsonpart['list'][3]['dt_txt']) - methodForNow())) + ' hours from now, it is gonna be ' +
-                     jsonpart['list'][3]['weather'][0]['main'],
+                text=jsonpart['list'][3]['dt_txt'] + ' it is gonna be ' +jsonpart['list'][3]['weather'][0]['main'],
                 thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][3]['weather'][0][
                     'icon'] + '.png',
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
@@ -464,8 +462,8 @@ def handle_text_message(event):
             getJson(searchObj.group(1), '0', token)
         if text.startswith('/weather'):
             searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
-            #getJsonForWeather(searchObj.group(1),token)
-            line_bot_api.reply_message(token,TextSendMessage(text=str(methodForNow())))
+            getJsonForWeather(searchObj.group(1),token)
+            
         if text.startswith('/video https://'):
             searchObj = re.search(r'/video https://(.*?);', text + ';', re.M | re.I)
             videoMessage(token,'https://'+searchObj.group(1))

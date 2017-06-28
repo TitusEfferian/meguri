@@ -464,7 +464,8 @@ def handle_text_message(event):
             getJson(searchObj.group(1), '0', token)
         if text.startswith('/weather'):
             searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
-            getJsonForWeather(searchObj.group(1),token)
+            #getJsonForWeather(searchObj.group(1),token)
+            line_bot_api.reply_message(token,TextSendMessage(text=str(methodForNow())))
         if text.startswith('/video https://'):
             searchObj = re.search(r'/video https://(.*?);', text + ';', re.M | re.I)
             videoMessage(token,'https://'+searchObj.group(1))

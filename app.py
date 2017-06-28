@@ -431,13 +431,14 @@ def methodForHelp(token):
     template_message = TemplateSendMessage(
         alt_text='meguri sent a photo.', template=carousel_template)
     line_bot_api.reply_message(token, template_message)
-
+def priceCurrency(text):
+    return (str('Rp {:0,.0f}'.format(text)).replace(',','.'))
 def bukalapak(token,text):
     try:
         jsonurl = urlopen('https://api.bukalapak.com/v2/products.json?keywords='+text+'&page=1&top_seller=1&per_page=5')
         jsonpart = json.loads(jsonurl.read())
 
-        line_bot_api.reply_message(token,TextSendMessage(text=jsonpart['products'][0]['name']))
+        line_bot_api.reply_message(token,TextSendMessage(text=str(priceCurrency(jsonpart['products'][0]['price']))))
     except IndexError:
         line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 

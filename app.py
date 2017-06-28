@@ -500,7 +500,7 @@ def handle_text_message(event):
             else:
                 videoMessageForSearchAPI(token,link)
         if text.startswith('/bukalapak'):
-            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
+            searchObj = re.search(r'/bukalapak (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
             bukalapak(token,replaceText)
 

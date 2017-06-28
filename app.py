@@ -137,10 +137,9 @@ def getJson(nickname, mode, token):
 
 
 def regexMethodForHour(text):
-    searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
-    number = int(searchObj.group(1))
+    searchObj = re.search(r' (.*?);', text + ';', re.M | re.I)
+    number = searchObj.group(1)
     #number+=24
-
     return number
 def methodForNow():
     time = int(datetime.datetime.now().hour+7)
@@ -156,48 +155,8 @@ def getJsonForWeather(city,token):
         countryId = getJsonForCountry(jsonpart['city']['country'])
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
-                text=jsonpart['list'][3]['dt_txt'] + ' it is gonna be ' +jsonpart['list'][3]['weather'][0]['main'],
+                text=regexMethodForHour(jsonpart['list'][3]['dt_txt']) + ' it is gonna be ' +jsonpart['list'][3]['weather'][0]['main'],
                 thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][3]['weather'][0][
-                    'icon'] + '.png',
-                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
-                text=str(int(regexMethodForHour(
-                    jsonpart['list'][4]['dt_txt']) - methodForNow())) + ' hours from now, it is gonna be ' +
-                     jsonpart['list'][4]['weather'][0]['main'],
-                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][4]['weather'][0][
-                    'icon'] + '.png',
-                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
-                text=str(int(regexMethodForHour(
-                    jsonpart['list'][5]['dt_txt']) - methodForNow())) + ' hours from now, it is gonna be ' +
-                     jsonpart['list'][5]['weather'][0]['main'],
-                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][5]['weather'][0][
-                    'icon'] + '.png',
-                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
-                text=str(int(regexMethodForHour(
-                    jsonpart['list'][6]['dt_txt']) - methodForNow())) + ' hours from now, it is gonna be ' +
-                     jsonpart['list'][6]['weather'][0]['main'],
-                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][6]['weather'][0][
-                    'icon'] + '.png',
-                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
-                    URITemplateAction(
-                        label='open in browser', uri='https://openweathermap.org/')
-                ]),
-            CarouselColumn(
-                text=str(int(regexMethodForHour(
-                    jsonpart['list'][7]['dt_txt']) - methodForNow())) + ' hours from now, it is gonna be ' +
-                     jsonpart['list'][7]['weather'][0]['main'],
-                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][7]['weather'][0][
                     'icon'] + '.png',
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
                     URITemplateAction(

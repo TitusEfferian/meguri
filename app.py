@@ -139,7 +139,7 @@ def getJson(nickname, mode, token):
 def regexMethodForHour(text):
     searchObj = re.search(r' (.*?):', text + ';', re.M | re.I)
     number = int(searchObj.group(1))
-    number+=24
+    #number+=24
 
     return number
 def methodForNow():

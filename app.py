@@ -52,9 +52,9 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('IFLYBHwHTM6qnQwm0y25h+eYD82RvTYs6tIvkejI89SSgXWkpzh+PB8pW07LyWuLjRQmYRKqm2OWcccY85GqjEzTqopCSFsIn7ghD1ICfLdGi7xR9fQg2LJXSyZdq0oabKJhXNnrbYRgJZHsTk9DkgdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi('O3tevompb2TBI20Oeodk53nif/edA8yIQfrtbDnae6CkfSpGjxmgInzF/WmThvWlmve+7VRgBF28+smp3IHLjiwx5WCqiT315U8n5M1vLYgXLg8YBvlNqlSxfJjlWPjk0DMzojD3TKCVD18bdXzbowdB04t89/1O/w1cDnyilFU=')
 
-handler = WebhookHandler('86e0e5b2dbade0ffb1babdfb52be6ee6')
+handler = WebhookHandler('2cd36ded8c1df15419670d69f6d02b31')
 
 
 

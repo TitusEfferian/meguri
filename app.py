@@ -439,12 +439,49 @@ def bukalapak(token,text):
         jsonpart = json.loads(jsonurl.read())
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(
+
                 text=str(priceCurrency(jsonpart['products'][0]['price'])),
                 thumbnail_image_url=
                 jsonpart['products'][0]['images'][0], actions=[
                     URITemplateAction(
                         label='open in browser',
                         uri=str(jsonpart['products'][0]['url'])
+                    )
+                ]),
+            CarouselColumn(
+                text=str(priceCurrency(jsonpart['products'][1]['price'])),
+                thumbnail_image_url=
+                jsonpart['products'][1]['images'][0], actions=[
+                    URITemplateAction(
+                        label='open in browser',
+                        uri=str(jsonpart['products'][1]['url'])
+                    )
+                ]),
+            CarouselColumn(
+                text=str(priceCurrency(jsonpart['products'][2]['price'])),
+                thumbnail_image_url=
+                jsonpart['products'][2]['images'][0], actions=[
+                    URITemplateAction(
+                        label='open in browser',
+                        uri=str(jsonpart['products'][2]['url'])
+                    )
+                ]),
+            CarouselColumn(
+                text=str(priceCurrency(jsonpart['products'][3]['price'])),
+                thumbnail_image_url=
+                jsonpart['products'][3]['images'][0], actions=[
+                    URITemplateAction(
+                        label='open in browser',
+                        uri=str(jsonpart['products'][3]['url'])
+                    )
+                ]),
+            CarouselColumn(
+                text=str(priceCurrency(jsonpart['products'][4]['price'])),
+                thumbnail_image_url=
+                jsonpart['products'][4]['images'][0], actions=[
+                    URITemplateAction(
+                        label='open in browser',
+                        uri=str(jsonpart['products'][4]['url'])
                     )
                 ])
         ])

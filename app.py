@@ -432,7 +432,14 @@ def methodForHelp(token):
         alt_text='meguri sent a photo.', template=carousel_template)
     line_bot_api.reply_message(token, template_message)
 
+def bukalapak(token,text):
+    try:
+        jsonurl = urlopen('https://api.bukalapak.com/v2/products.json?keywords='+text+'&page=1&top_seller=1&per_page=5')
+        jsonpart = json.loads(jsonurl.read())
 
+        line_bot_api.reply_message(token,TextSendMessage(text=jsonpart['products'][0]['name']))
+    except IndexError:
+        line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
 
 
@@ -463,7 +470,6 @@ def handle_text_message(event):
         if text.startswith('/weather'):
             searchObj = re.search(r'/weather (.*?);', text + ';', re.M | re.I)
             getJsonForWeather(searchObj.group(1),token)
-            
         if text.startswith('/video https://'):
             searchObj = re.search(r'/video https://(.*?);', text + ';', re.M | re.I)
             videoMessage(token,'https://'+searchObj.group(1))
@@ -493,6 +499,11 @@ def handle_text_message(event):
                     link='https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
             else:
                 videoMessageForSearchAPI(token,link)
+        if text.startswith('/bukalapak'):
+            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
+            replaceText = searchObj.group(1).replace(' ', '+')
+            bukalapak(token,replaceText)
+
 
 
 

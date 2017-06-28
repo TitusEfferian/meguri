@@ -340,10 +340,10 @@ def stalkInstagram(token,text):
             else:
                 result = []
                 used = []
-                for x in range(0, 12):
-                    add = int(randint(0, 12))
+                for x in range(0, 11):
+                    add = int(randint(0, 11))
                     while (add in used):
-                        add = int(randint(0, 12))
+                        add = int(randint(0, 11))
                     used.append(add)
                     result.append(add)
 

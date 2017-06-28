@@ -437,8 +437,21 @@ def bukalapak(token,text):
     try:
         jsonurl = urlopen('https://api.bukalapak.com/v2/products.json?keywords='+text+'&page=1&top_seller=1&per_page=5')
         jsonpart = json.loads(jsonurl.read())
+        carousel_template = CarouselTemplate(columns=[
+            CarouselColumn(
+                text=str(priceCurrency(jsonpart['products'][0]['price'])),
+                thumbnail_image_url=
+                jsonpart['products'][0]['images'][0], actions=[
+                    URITemplateAction(
+                        label='open in browser',
+                        uri='https://www.bukalapak.com/'
+                    )
+                ])
+        ])
+        template_message = TemplateSendMessage(
+            alt_text='meguri sent a photo.', template=carousel_template)
+        line_bot_api.reply_message(token, template_message)
 
-        line_bot_api.reply_message(token,TextSendMessage(text=str(priceCurrency(jsonpart['products'][0]['price']))))
     except IndexError:
         line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 

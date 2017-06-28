@@ -161,6 +161,24 @@ def getJsonForWeather(city,token):
                 title=jsonpart['city']['name'] + ', ' + countryId, actions=[
                     URITemplateAction(
                         label='open in browser', uri='https://openweathermap.org/')
+                ]),
+            CarouselColumn(
+                text=regexMethodForHour(jsonpart['list'][4]['dt_txt']) + ' it is gonna be ' +
+                     jsonpart['list'][4]['weather'][0]['main'],
+                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][4]['weather'][0][
+                    'icon'] + '.png',
+                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
+                    URITemplateAction(
+                        label='open in browser', uri='https://openweathermap.org/')
+                ]),
+            CarouselColumn(
+                text=regexMethodForHour(jsonpart['list'][5]['dt_txt']) + ' it is gonna be ' +
+                     jsonpart['list'][5]['weather'][0]['main'],
+                thumbnail_image_url='https://openweathermap.org/img/w/' + jsonpart['list'][5]['weather'][0][
+                    'icon'] + '.png',
+                title=jsonpart['city']['name'] + ', ' + countryId, actions=[
+                    URITemplateAction(
+                        label='open in browser', uri='https://openweathermap.org/')
                 ])
         ])
         template_message = TemplateSendMessage(

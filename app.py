@@ -444,7 +444,7 @@ def bukalapak(token,text):
                 jsonpart['products'][0]['images'][0], actions=[
                     URITemplateAction(
                         label='open in browser',
-                        uri=['products'][0]['url']
+                        uri=goo_shorten_url(['products'][0]['url'])
                     )
                 ])
         ])

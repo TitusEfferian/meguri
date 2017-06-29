@@ -239,52 +239,68 @@ def imageSearch(token,text):
     try:
         content = azureImage(text)
         textEncode = text.replace('+',' ')
-        carousel_template = CarouselTemplate(columns=[
-            CarouselColumn(
-                text=textEncode,
-                thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
-                    PostbackTemplateAction(
-                        label='download',
-                        data=text+':'+'0'
-                    )
-                ]),
-            CarouselColumn(
-                text=textEncode,
-                thumbnail_image_url=content['value'][1]['thumbnailUrl'], actions=[
-                    PostbackTemplateAction(
-                        label='download',
-                        data=text + ':' + '1'
-                    )
-                ]),
-            CarouselColumn(
-                text=textEncode,
-                thumbnail_image_url=content['value'][2]['thumbnailUrl'], actions=[
-                    PostbackTemplateAction(
-                        label='download',
-                        data=text + ':' + '2'
-                    )
-                ]),
-            CarouselColumn(
-                text=textEncode,
-                thumbnail_image_url=content['value'][3]['thumbnailUrl'], actions=[
-                    PostbackTemplateAction(
-                        label='download',
-                        data=text + ':' + '3'
-                    )
-                ]),
-            CarouselColumn(
-                text=textEncode,
-                thumbnail_image_url=content['value'][4]['thumbnailUrl'], actions=[
-                    PostbackTemplateAction(
-                        label='download',
-                        data=text + ':' + '4'
-                    )
-                ])
+        if len(content['value'])<5:
+            randomNumber = randint(0,len(content['value'])-1)
+            carousel_template = CarouselTemplate(columns=[
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][randomNumber]['thumbnailUrl'], actions=[
+                        PostbackTemplateAction(
+                            label='download',
+                            data=text + ':' + str(randomNumber)
+                        )
+                    ])
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='meguri sent a photo.', template=carousel_template)
+            line_bot_api.reply_message(token, template_message)
+        else:
+            carousel_template = CarouselTemplate(columns=[
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
+                        PostbackTemplateAction(
+                            label='download',
+                            data=text+':'+'0'
+                        )
+                    ]),
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][1]['thumbnailUrl'], actions=[
+                        PostbackTemplateAction(
+                            label='download',
+                            data=text + ':' + '1'
+                        )
+                    ]),
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][2]['thumbnailUrl'], actions=[
+                        PostbackTemplateAction(
+                            label='download',
+                            data=text + ':' + '2'
+                        )
+                    ]),
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][3]['thumbnailUrl'], actions=[
+                        PostbackTemplateAction(
+                            label='download',
+                            data=text + ':' + '3'
+                        )
+                    ]),
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][4]['thumbnailUrl'], actions=[
+                        PostbackTemplateAction(
+                            label='download',
+                            data=text + ':' + '4'
+                        )
+                    ])
 
-        ])
-        template_message = TemplateSendMessage(
-            alt_text='meguri sent a photo.', template=carousel_template)
-        line_bot_api.reply_message(token, template_message)
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='meguri sent a photo.', template=carousel_template)
+            line_bot_api.reply_message(token, template_message)
     except IndexError:
         line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 

@@ -303,9 +303,8 @@ def imageSearch(token,text):
             line_bot_api.reply_message(token, template_message)
     except IndexError:
         line_bot_api.reply_message(token,TextSendMessage(text='not found'))
-    except HTTPError as err:
-        if err.code==400:
-            print('not found')
+    except HTTPError:
+        line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
 
 def stalkInstagram(token,text):

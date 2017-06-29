@@ -285,9 +285,8 @@ def imageSearch(token,text):
         template_message = TemplateSendMessage(
             alt_text='meguri sent a photo.', template=carousel_template)
         line_bot_api.reply_message(token, template_message)
-    except HTTPError as err:
-        if err.code:
-            line_bot_api.reply_message(token,TextSendMessage(text='not found'))
+    except IndexError:
+        line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
 
 def stalkInstagram(token,text):

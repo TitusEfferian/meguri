@@ -478,7 +478,7 @@ def handle_text_message(event):
     token = event.reply_token
 
 
-    if 'bot leave' not in event.message.text:
+    if 'bot leave' not in event.message.text.lower():
         if text.startswith('/ctb'):
             searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
             searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)

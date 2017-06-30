@@ -290,6 +290,8 @@ def imageSearch(token,text):
             template_message = TemplateSendMessage(
                 alt_text='meguri sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)
+    except IndexError:
+        line_bot_api.reply_message(token,TextSendMessage(text='not found'))
     except HTTPError:
         line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 

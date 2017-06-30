@@ -520,19 +520,19 @@ def handle_text_message(event):
             searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
             jsonurl = urlopen(
-                'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=25')
+                'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=5')
             jsonpart = json.loads(jsonurl.read())
-            #used = []
-            random = randint(0,24)
+            used = []
+            random = randint(0,4)
             link = 'https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
-            #if videoMessageForSearchAPI(token,link)=='0':
-            #    while (videoMessageForSearchAPI(token,link)=='0'):
-            #        while random in used:
-            #            random = randint(0, 4)
-            #        used.append(random)
-            #        link='https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
-            #else:
-            videoMessageForSearchAPI(token,link)
+            if videoMessageForSearchAPI(token,link)=='0':
+                while (videoMessageForSearchAPI(token,link)=='0'):
+                    while random in used:
+                        random = randint(0, 4)
+                    used.append(random)
+                    link='https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
+            else:
+                videoMessageForSearchAPI(token,link)
         if text.startswith('/bukalapak'):
             searchObj = re.search(r'/bukalapak (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
@@ -627,7 +627,7 @@ def handle_postback(event):
             text='search a product in one of biggest e-commerce in southeast asia BUKALAPAK\nexample:\n/bukalapak <productname>\n(/bukalapak zenfone 3)'))
     if event.postback.data == 'youtube':
         line_bot_api.reply_message(event.reply_token, TextSendMessage(
-            text='share youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ'))
+            text='share or search youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\nexample 2:/video hatsune miku'))
     if event.postback.data == 'image':
         line_bot_api.reply_message(event.reply_token, TextSendMessage(
             text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))

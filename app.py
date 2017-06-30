@@ -246,10 +246,8 @@ def imageSearch(token,text):
                 CarouselColumn(
                     text=textEncode,
                     thumbnail_image_url=content['value'][randomNumber]['thumbnailUrl'], actions=[
-                        PostbackTemplateAction(
-                            label='download',
-                            data=text + ':' + str(randomNumber)
-                        )
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][randomNumber]['contentUrl']))
                     ])
             ])
             template_message = TemplateSendMessage(

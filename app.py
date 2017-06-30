@@ -129,7 +129,7 @@ def getJson(nickname, mode, token):
                     text='global rank: ' + pp_rank + ' (#' + country_rank + ' ' + country + ')',
                     thumbnail_image_url=imageurl, title=username, actions=[
                         URITemplateAction(
-                            label='go to user', uri='https://osu.ppy.sh/u/' + username)
+                            label='go to user', uri='https://osu.ppy.sh/' + username)
                     ])
             ])
             template_message = TemplateSendMessage(

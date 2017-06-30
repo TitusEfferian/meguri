@@ -258,42 +258,32 @@ def imageSearch(token,text):
                 CarouselColumn(
                     text=textEncode,
                     thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
-                        PostbackTemplateAction(
-                            label='download',
-                            data=text+':'+'0'
-                        )
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][0]['contentUrl']))
                     ]),
                 CarouselColumn(
                     text=textEncode,
                     thumbnail_image_url=content['value'][1]['thumbnailUrl'], actions=[
-                        PostbackTemplateAction(
-                            label='download',
-                            data=text + ':' + '1'
-                        )
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][1]['contentUrl']))
                     ]),
                 CarouselColumn(
                     text=textEncode,
                     thumbnail_image_url=content['value'][2]['thumbnailUrl'], actions=[
-                        PostbackTemplateAction(
-                            label='download',
-                            data=text + ':' + '2'
-                        )
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][2]['contentUrl']))
                     ]),
                 CarouselColumn(
                     text=textEncode,
                     thumbnail_image_url=content['value'][3]['thumbnailUrl'], actions=[
-                        PostbackTemplateAction(
-                            label='download',
-                            data=text + ':' + '3'
-                        )
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][3]['contentUrl']))
                     ]),
                 CarouselColumn(
                     text=textEncode,
                     thumbnail_image_url=content['value'][4]['thumbnailUrl'], actions=[
-                        PostbackTemplateAction(
-                            label='download',
-                            data=text + ':' + '4'
-                        )
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][4]['contentUrl']))
                     ])
 
             ])

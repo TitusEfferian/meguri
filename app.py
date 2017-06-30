@@ -594,7 +594,7 @@ def handle_follow(event):
 
 @handler.add(UnfollowEvent)
 def handle_unfollow():
-    #app.logger.info("Got Unfollow event")
+    app.logger.info("Got Unfollow event")
 
 
 @handler.add(JoinEvent)

@@ -107,8 +107,9 @@ def getJsonForCountry(country):
     jsonpart = json.loads(jsonurl.read())
     return jsonpart['name']
 def getJson(nickname, mode, token):
+
     jsonurl = urlopen(
-        'https://osu.ppy.sh/api/get_user?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname + '&m=' + mode)
+        'https://osu.ppy.sh/api/get_user?k=37967304c711a663eb326dcf8b41e1a5987e2b7f&u=' + nickname.lower() + '&m=' + mode)
     jsonpart = json.loads(jsonurl.read())
 
     if len(jsonpart) == 0:

@@ -230,7 +230,7 @@ def goo_shorten_url(url):
     return jsonpart['id']
 def azureImage(text):
     req = Request('https://api.cognitive.microsoft.com/bing/v5.0/images/search?q=' + text)
-    req.add_header('Ocp-Apim-Subscription-Key', 'db017bc371a34c488702df1801fc8f11')
+    req.add_header('Ocp-Apim-Subscription-Key', 'f17c155ad77b4ae9926829e0d9c44cb9')
     resp = urlopen(req)
     content = json.loads(resp.read())
     return content
@@ -290,7 +290,6 @@ def imageSearch(token,text):
             template_message = TemplateSendMessage(
                 alt_text='meguri sent a photo.', template=carousel_template)
             line_bot_api.reply_message(token, template_message)
-   
     except HTTPError:
         line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 

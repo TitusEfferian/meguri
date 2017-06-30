@@ -633,14 +633,6 @@ def handle_postback(event):
                 text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))
 
 
-        else:
-            searchObj = re.search(r'(.*?):(.*);', event.postback.data + ';', re.M | re.I)
-            content = azureImage(searchObj.group(1))
-            contentImage = goo_shorten_url(content['value'][int(searchObj.group(2))]['contentUrl'])
-            thumbnail = content['value'][int(searchObj.group(2))]['thumbnailUrl']
-            line_bot_api.reply_message(
-                event.reply_token, ImageSendMessage(contentImage,thumbnail))
-
 
 @handler.add(BeaconEvent)
 def handle_beacon(event):

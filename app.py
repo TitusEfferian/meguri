@@ -238,61 +238,58 @@ def azureImage(text):
 
 def imageSearch(token,text):
     try:
-        try:
-            content = azureImage(text)
-            textEncode = text.replace('+',' ')
-            if len(content['value'])<5:
-                randomNumber = randint(0,len(content['value'])-1)
-                carousel_template = CarouselTemplate(columns=[
-                    CarouselColumn(
-                        text=textEncode,
-                        thumbnail_image_url=content['value'][randomNumber]['thumbnailUrl'], actions=[
-                            URITemplateAction(
-                                label='open in browser', uri=goo_shorten_url(content['value'][randomNumber]['contentUrl']))
-                        ])
-                ])
-                template_message = TemplateSendMessage(
-                    alt_text='meguri sent a photo.', template=carousel_template)
-                line_bot_api.reply_message(token, template_message)
-            else:
-                carousel_template = CarouselTemplate(columns=[
-                    CarouselColumn(
-                        text=textEncode,
-                        thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
-                            URITemplateAction(
-                                label='open in browser', uri=goo_shorten_url(content['value'][0]['contentUrl']))
-                        ]),
-                    CarouselColumn(
-                        text=textEncode,
-                        thumbnail_image_url=content['value'][1]['thumbnailUrl'], actions=[
-                            URITemplateAction(
-                                label='open in browser', uri=goo_shorten_url(content['value'][1]['contentUrl']))
-                        ]),
-                    CarouselColumn(
-                        text=textEncode,
-                        thumbnail_image_url=content['value'][2]['thumbnailUrl'], actions=[
-                            URITemplateAction(
-                                label='open in browser', uri=goo_shorten_url(content['value'][2]['contentUrl']))
-                        ]),
-                    CarouselColumn(
-                        text=textEncode,
-                        thumbnail_image_url=content['value'][3]['thumbnailUrl'], actions=[
-                            URITemplateAction(
-                                label='open in browser', uri=goo_shorten_url(content['value'][3]['contentUrl']))
-                        ]),
-                    CarouselColumn(
-                        text=textEncode,
-                        thumbnail_image_url=content['value'][4]['thumbnailUrl'], actions=[
-                            URITemplateAction(
-                                label='open in browser', uri=goo_shorten_url(content['value'][4]['contentUrl']))
-                        ])
+        content = azureImage(text)
+        textEncode = text.replace('+', ' ')
+        if len(content['value']) < 5:
+            randomNumber = randint(0, len(content['value']) - 1)
+            carousel_template = CarouselTemplate(columns=[
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][randomNumber]['thumbnailUrl'], actions=[
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][randomNumber]['contentUrl']))
+                    ])
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='meguri sent a photo.', template=carousel_template)
+            line_bot_api.reply_message(token, template_message)
+        else:
+            carousel_template = CarouselTemplate(columns=[
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][0]['thumbnailUrl'], actions=[
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][0]['contentUrl']))
+                    ]),
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][1]['thumbnailUrl'], actions=[
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][1]['contentUrl']))
+                    ]),
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][2]['thumbnailUrl'], actions=[
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][2]['contentUrl']))
+                    ]),
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][3]['thumbnailUrl'], actions=[
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][3]['contentUrl']))
+                    ]),
+                CarouselColumn(
+                    text=textEncode,
+                    thumbnail_image_url=content['value'][4]['thumbnailUrl'], actions=[
+                        URITemplateAction(
+                            label='open in browser', uri=goo_shorten_url(content['value'][4]['contentUrl']))
+                    ])
 
-                ])
-                template_message = TemplateSendMessage(
-                    alt_text='meguri sent a photo.', template=carousel_template)
-                line_bot_api.reply_message(token, template_message)
-        except IndexError:
-            line_bot_api.reply_message(token,TextSendMessage(text='not found'))
+            ])
+            template_message = TemplateSendMessage(
+                alt_text='meguri sent a photo.', template=carousel_template)
+            line_bot_api.reply_message(token, template_message)
     except HTTPError:
         line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 

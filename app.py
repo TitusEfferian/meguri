@@ -613,25 +613,24 @@ def handle_leave():
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
-    if len(event.postback.data) > 0:
-        if event.postback.data == 'developer':
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='under development for personal amusement by :\ntitus efferian (line id: adhistitus) and\nkato@linuxsec.org'))
-        if event.postback.data == 'instagram':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(
-                text='stalk your instagram friends\n/stalk <username>\nexample: /stalk yingtze'))
-        if event.postback.data == 'osu':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(
-                text='this command for osu player: /std /taiko /ctb /mania\nexample: /ctb deceitful'))
-        if event.postback.data == 'bukalapak':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(
-                text='search a product in one of biggest e-commerce in southeast asia BUKALAPAK\nexample:\n/bukalapak <productname>\n(/bukalapak zenfone 3)'))
-        if event.postback.data == 'youtube':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(
-                text='share or search youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\nexample 2:/video hatsune miku'))
-        if event.postback.data == 'image':
-            line_bot_api.reply_message(event.reply_token, TextSendMessage(
-                text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))
-
+    if event.postback.data == 'developer':
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(
+            text='under development for personal amusement by :\ntitus efferian (line id: adhistitus) and\nkato@linuxsec.org'))
+    if event.postback.data == 'instagram':
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(
+            text='stalk your instagram friends\n/stalk <username>\nexample: /stalk yingtze'))
+    if event.postback.data == 'osu':
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(
+            text='this command for osu player: /std /taiko /ctb /mania\nexample: /ctb deceitful'))
+    if event.postback.data == 'bukalapak':
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(
+            text='search a product in one of biggest e-commerce in southeast asia BUKALAPAK\nexample:\n/bukalapak <productname>\n(/bukalapak zenfone 3)'))
+    if event.postback.data == 'youtube':
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(
+            text='share or search youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\nexample 2:/video hatsune miku'))
+    if event.postback.data == 'image':
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(
+            text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))
 
 
 @handler.add(BeaconEvent)

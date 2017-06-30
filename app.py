@@ -516,15 +516,15 @@ def handle_text_message(event):
             stalkInstagram(token,searchObj.group(1))
         if text.startswith('/help'):
             methodForHelp(token)
-        #if text.startswith('/video'):
-        #    searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
-         #   replaceText = searchObj.group(1).replace(' ', '+')
-          #  jsonurl = urlopen(
-           #     'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=5')
-            #jsonpart = json.loads(jsonurl.read())
+        if text.startswith('/video'):
+            searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
+            replaceText = searchObj.group(1).replace(' ', '+')
+            jsonurl = urlopen(
+                'https://www.googleapis.com/youtube/v3/search?part=snippet&q='+replaceText+'&type=video&key=AIzaSyDbfeClXLMorneLuPnEILavUgZkiB-3SrM&maxResults=5')
+            jsonpart = json.loads(jsonurl.read())
             #used = []
-            #random = randint(0,4)
-            #link = 'https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
+            random = randint(0,4)
+            link = 'https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
             #if videoMessageForSearchAPI(token,link)=='0':
             #    while (videoMessageForSearchAPI(token,link)=='0'):
             #        while random in used:
@@ -532,7 +532,7 @@ def handle_text_message(event):
             #        used.append(random)
             #        link='https://www.youtube.com/watch?v='+str(jsonpart['items'][random]['id']['videoId'])
             #else:
-            #    videoMessageForSearchAPI(token,link)
+            videoMessageForSearchAPI(token,link)
         if text.startswith('/bukalapak'):
             searchObj = re.search(r'/bukalapak (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')

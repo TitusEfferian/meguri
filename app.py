@@ -407,6 +407,13 @@ def methodForHelp(token):
                     label='weather',
                     data='weather'
                 )
+            ]),
+        CarouselColumn(
+            text=' ', actions=[
+                PostbackTemplateAction(
+                    label='about',
+                    data='developer'
+                )
             ])
     ])
     template_message = TemplateSendMessage(
@@ -629,7 +636,6 @@ def handle_postback(event):
     if event.postback.data == 'image':
         line_bot_api.reply_message(event.reply_token, TextSendMessage(
             text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))
-
 
 @handler.add(BeaconEvent)
 def handle_beacon(event):

@@ -407,13 +407,6 @@ def methodForHelp(token):
                     label='weather',
                     data='weather'
                 )
-            ]),
-        CarouselColumn(
-            text=' ', actions=[
-                PostbackTemplateAction(
-                    label='about',
-                    data='developer'
-                )
             ])
     ])
     template_message = TemplateSendMessage(

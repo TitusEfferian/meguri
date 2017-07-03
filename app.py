@@ -400,12 +400,12 @@ def methodForHelp(token):
                     data='bukalapak'
                 ),
                 PostbackTemplateAction(
-                    label='osu',
-                    data='osu'
-                ),
-                PostbackTemplateAction(
                     label='weather',
                     data='weather'
+                ),
+                PostbackTemplateAction(
+                    label='about',
+                    data='developer'
                 )
             ])
     ])

@@ -629,7 +629,8 @@ def handle_postback(event):
     if event.postback.data == 'image':
         line_bot_api.reply_message(event.reply_token, TextSendMessage(
             text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))
-
+    if event.postback.data == 'weather':
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='weather forecast\n\nex:/weather jakarta'))
 @handler.add(BeaconEvent)
 def handle_beacon(event):
     line_bot_api.reply_message(

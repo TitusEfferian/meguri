@@ -205,10 +205,12 @@ def videoMessage(token,text):
         if err.code == 500:
            line_bot_api.reply_message(token,TextSendMessage(text='video not supported'))
 
+
+
 def videoMessageForSearchAPI(token,text):
     try:
         #jsonurl = urlopen('http://ytdl-srv-unoff.herokuapp.com/api/info?url='+text)
-        jsonurl = urlopen('http://megumin-yt.herokuapp.com/api/info?url=' + text)
+        jsonurl = urlopen('http://ytdl-a.herokuapp.com/api/info?url='+text)
         jsonpart = json.loads(jsonurl.read())
         content = jsonpart['info']['url']
         thumbnail = jsonpart['info']['thumbnail']

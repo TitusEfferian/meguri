@@ -218,7 +218,7 @@ def videoMessageForSearchAPI(token,text):
         return line_bot_api.reply_message(token, video_message)
     except HTTPError as err:
         if err.code == 500:
-            return '0'
+            line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
 
 def goo_shorten_url(url):

@@ -528,10 +528,7 @@ def handle_text_message(event):
             searchObj = re.search(r'/bukalapak (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
             bukalapak(token,replaceText)
-        if 'pornhub' in text:
-            line_bot_api.reply_message(token,TextSendMessage(text='prohibited link'))
-        if 'redtube' in text:
-            line_bot_api.reply_message(token,TextSendMessage(text='prohibited link'))
+       
 
 
 

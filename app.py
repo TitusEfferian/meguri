@@ -207,7 +207,7 @@ def videoMessage(token,text):
 
 def videoMessageForSearchAPI(token,text):
     try:
-        jsonurl = urlopen('http://megumin-yt.herokuapp.com/api/info?url=' + text)
+        jsonurl = urlopen('https://ytdl-a.herokuapp.com/api/info?url=' + text)
         jsonpart = json.loads(jsonurl.read())
         content = jsonpart['info']['url']
         thumbnail = jsonpart['info']['thumbnail']

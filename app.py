@@ -504,7 +504,7 @@ def handle_text_message(event):
             methodForHelpImage(token)
         if text.startswith('/help osu'):
             methodForHelpOsu(token)
-        if text.startswith('/weather'):
+        if text.startswith('/help weather'):
             methodForHelpWeather(token)
         if text.startswith('/about'):
             methodForHelpAbout(token)

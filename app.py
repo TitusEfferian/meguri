@@ -373,44 +373,25 @@ def stalkInstagram(token,text):
     except HTTPError as err:
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='user not found'))
-
-
 def methodForHelp(token):
-    carousel_template = CarouselTemplate(columns=[
-        CarouselColumn(
-            text=' ', actions=[
-                PostbackTemplateAction(
-                    label='instagram',
-                    data='instagram'
-                ),
-                PostbackTemplateAction(
-                    label='youtube',
-                    data='youtube'
-                ),
-                PostbackTemplateAction(
-                    label='image',
-                    data='image'
-                )
-            ]),
-        CarouselColumn(
-            text=' ', actions=[
-                PostbackTemplateAction(
-                    label='bukalapak',
-                    data='bukalapak'
-                ),
-                PostbackTemplateAction(
-                    label='weather',
-                    data='weather'
-                ),
-                PostbackTemplateAction(
-                    label='about',
-                    data='developer'
-                )
-            ])
-    ])
-    template_message = TemplateSendMessage(
-        alt_text='meguri sent a photo.', template=carousel_template)
-    line_bot_api.reply_message(token, template_message)
+        line_bot_api.reply_message(token,TextSendMessage(text='/stalk /video /image /bukalapak /weather /osu /about\n\nfor more information type /help <command name>\nex:/help osu'))
+def methodForHelpVideo(token):
+        line_bot_api.reply_message(token,TextSendMessage(text='share or search youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\nexample 2:/video hatsune miku'))
+def methodForHelpBukalapak(token):
+    line_bot_api.reply_message(token, TextSendMessage(
+        text='search a product in one of biggest e-commerce in southeast asia BUKALAPAK\nexample:\n/bukalapak <productname>\n(/bukalapak zenfone 3)'))
+def methodForHelpOsu(token):
+        line_bot_api.reply_message(token,TextSendMessage(text='command for osu player /std /ctb /taiko /mania\nex:/ctb deceitful'))
+def methodForHelpAbout(token):
+    line_bot_api.reply_message(token, TextSendMessage(
+        text='under development for personal amusement by :\ntitus efferian (line id: adhistitus) and\nkato@linuxsec.org'))
+def methodForHelpImage(token):
+    line_bot_api.reply_message(token, TextSendMessage(
+        text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))
+def methodForHelpWeather(token):
+    line_bot_api.reply_message(token, TextSendMessage(text='weather forecast\n\nex:/weather jakarta'))
+def methodForHelpStalk(token):
+        line_bot_api.reply_message(token,TextSendMessage(text='stalk your instagram friends\n/stalk <username>\nex:/stakl yingtze'))
 def priceCurrency(text):
     return (str('Rp {:0,.0f}'.format(text)).replace(',','.'))
 def bukalapak(token,text):
@@ -513,6 +494,20 @@ def handle_text_message(event):
             stalkInstagram(token,searchObj.group(1))
         if text.startswith('/help'):
             methodForHelp(token)
+        if text.startswith('/help stalk'):
+            methodForHelpStalk(token)
+        if text.startswith('/help video'):
+            methodForHelpVideo(token)
+        if text.startswith('/help bukalapak'):
+            methodForHelpBukalapak(token)
+        if text.startswith('/help image'):
+            methodForHelpImage(token)
+        if text.startswith('/help osu'):
+            methodForHelpOsu(token)
+        if text.startswith('/weather'):
+            methodForHelpWeather(token)
+        if text.startswith('/about'):
+            methodForHelpAbout(token)
         if text.startswith('/video'):
             searchObj = re.search(r'/video (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')

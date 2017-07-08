@@ -492,7 +492,7 @@ def handle_text_message(event):
         if text.startswith('/stalk'):
             searchObj = re.search(r'/stalk (.*?);', text + ';', re.M | re.I)
             stalkInstagram(token,searchObj.group(1))
-        if text.startswith('/help'):
+        if text=='/help':
             methodForHelp(token)
         if text.startswith('/help stalk'):
             methodForHelpStalk(token)

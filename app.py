@@ -376,7 +376,7 @@ def stalkInstagram(token,text):
 def methodForHelp(token):
         line_bot_api.reply_message(token,TextSendMessage(text='/stalk /video /image /bukalapak /weather /osu /about\n\nfor more information type /help <command name>\nex:/help osu'))
 def methodForHelpVideo(token):
-        line_bot_api.reply_message(token,TextSendMessage(text='share or search youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\nexample 2:/video hatsune miku'))
+        line_bot_api.reply_message(token,TextSendMessage(text='share or search youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\nexample 2:/video hatsune miku\n\nnow support to share video from twitch and vimeo\nex:https://www.twitch.tv/videos/156691454'))
 def methodForHelpBukalapak(token):
     line_bot_api.reply_message(token, TextSendMessage(
         text='search a product in one of biggest e-commerce in southeast asia BUKALAPAK\nexample:\n/bukalapak <productname>\n(/bukalapak zenfone 3)'))

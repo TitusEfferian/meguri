@@ -599,10 +599,7 @@ def handle_content_message(event):
     os.rename(tempfile_path, dist_path)
 
     line_bot_api.reply_message(
-        event.reply_token, [
-            TextSendMessage(text='Save content.'),
-            TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
-        ])
+        event.reply_token, TextSendMessage(text='Save content.'))
 
 
 @handler.add(FollowEvent)

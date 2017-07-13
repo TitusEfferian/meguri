@@ -483,9 +483,11 @@ def textanalytics(token,text):
 
     except WatsonException as err:
         if '400' in str(err):
-            line_bot_api.reply_message(token,TextSendMessage(text='dont know'))
-        if '422' in str(err):
+            line_bot_api.reply_message(token,TextSendMessage(text='unsupported text language'))
+        elif '422' in str(err):
             line_bot_api.reply_message(token,TextSendMessage(text='not enough text for language processing'))
+        else:
+            line_bot_api.reply_message(token,TextSendMessage(text='dont know'))
 
 
 

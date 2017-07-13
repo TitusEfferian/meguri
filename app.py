@@ -6,7 +6,8 @@ import errno
 import os
 import re
 
-
+from watson_developer_cloud import NaturalLanguageUnderstandingV1, WatsonException
+import watson_developer_cloud.natural_language_understanding.features.v1 as Features
 
 import tempfile
 from random import randint
@@ -453,6 +454,38 @@ def bukalapak(token,text):
     except IndexError:
         line_bot_api.reply_message(token,TextSendMessage(text='not found'))
 
+def textanalytics(token,text):
+    try:
+        natural_language_understanding = NaturalLanguageUnderstandingV1(
+            username="9d600703-7095-4ada-b888-e3a8289bf74e",
+            password="HzbSjQzEReja",
+            version="2017-02-27")
+
+        response = natural_language_understanding.analyze(
+            text=text,
+            features=[
+                Features.Emotion()
+            ]
+        )
+        jsonpart = json.loads(json.dumps(response, indent=2))
+        sadness = jsonpart['emotion']['document']['emotion']['sadness']
+        joy = jsonpart['emotion']['document']['emotion']['joy']
+        fear = jsonpart['emotion']['document']['emotion']['fear']
+        disgust = jsonpart['emotion']['document']['emotion']['disgust']
+        anger = jsonpart['emotion']['document']['emotion']['anger']
+        sadnessText = 'sadness = ' + str(round(sadness * 100)) + '%'
+        joyText = 'joy = ' + str(round(joy * 100)) + '%'
+        fearText = 'fear = ' + str(round(fear * 100)) + '%'
+        disgustText = 'disgust = ' + str(round(disgust * 100)) + '%'
+        angerText = 'anger = ' + str(round(anger * 100)) + '%'
+        line_bot_api.reply_message(token,TextSendMessage(text=text+'\n\n'+sadnessText+'\n'+joyText+'\n'+fearText+'\n'+disgustText+'\n'+angerText))
+
+
+    except WatsonException as err:
+        if '400' in str(err):
+            line_bot_api.reply_message(token,TextSendMessage(text='dont know'))
+        if '422' in str(err):
+            line_bot_api.reply_message(token,TextSendMessage(text='not enough text for language processing'))
 
 
 
@@ -489,6 +522,7 @@ def handle_text_message(event):
             searchObj = re.search(r'/image (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ','+')
             imageSearch(token,replaceText)
+
         if text.startswith('/stalk'):
             searchObj = re.search(r'/stalk (.*?);', text + ';', re.M | re.I)
             stalkInstagram(token,searchObj.group(1))
@@ -522,6 +556,10 @@ def handle_text_message(event):
             searchObj = re.search(r'/bukalapak (.*?);', text + ';', re.M | re.I)
             replaceText = searchObj.group(1).replace(' ', '+')
             bukalapak(token,replaceText)
+        if text.startswith('/text'):
+            searchObj = re.search(r'/text (.*?);', text + ';', re.M | re.I)
+            textanalytics(token,searchObj.group(1))
+
 
 
 

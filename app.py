@@ -585,19 +585,9 @@ def handle_text_message(event):
 
 
 # Other Message Type
-@handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
+@handler.add(MessageEvent, message=(VideoMessage))
 def handle_content_message(event):
-    if isinstance(event.message, ImageMessage):
-        #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ini image'))
-        ext = 'jpg'
-    elif isinstance(event.message, VideoMessage):
-        ext = 'mp4'
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='.mp4'))
-    elif isinstance(event.message, AudioMessage):
-        ext = 'm4a'
-    else:
-        return
-
+    ext = '.mp4'
     message_content = line_bot_api.get_message_content(event.message.id)
     with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
         for chunk in message_content.iter_content():

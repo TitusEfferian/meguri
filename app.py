@@ -609,7 +609,7 @@ def handle_content_message(event):
     line_bot_api.reply_message(
         event.reply_token, [
             TextSendMessage(text='Save content.'),
-            TextSendMessage(text='hai osakmj')
+            TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
         ])
 
 
@@ -664,6 +664,7 @@ def handle_beacon(event):
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
+    make_static_tmp_dir()
     app.run(host='0.0.0.0', port=port)
 
 

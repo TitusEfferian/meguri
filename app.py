@@ -592,6 +592,7 @@ def handle_content_message(event):
         ext = 'jpg'
     elif isinstance(event.message, VideoMessage):
         ext = 'mp4'
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text='.mp4'))
     elif isinstance(event.message, AudioMessage):
         ext = 'm4a'
     else:

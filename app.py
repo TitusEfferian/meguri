@@ -561,6 +561,8 @@ def handle_text_message(event):
         if text.startswith('/text'):
             searchObj = re.search(r'/text (.*?);', text + ';', re.M | re.I)
             textanalytics(token,searchObj.group(1))
+        if text.startswith('/debug clear'):
+            os.remove()
 
 
 

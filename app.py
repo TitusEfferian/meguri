@@ -561,8 +561,6 @@ def handle_text_message(event):
         if text.startswith('/text'):
             searchObj = re.search(r'/text (.*?);', text + ';', re.M | re.I)
             textanalytics(token,searchObj.group(1))
-        if text.startswith('/debug clear'):
-            os.remove()
 
 
 
@@ -584,10 +582,32 @@ def handle_text_message(event):
 
 
 
-
+def faceapi(token,url):
+    subscription_key = 'e7eb416320be4c58b7d89d089359e48f'
+    uri_base = 'https://southeastasia.api.cognitive.microsoft.com'
+    # Request headers.
+    headers = {
+        'Content-Type': 'application/json',
+        'Ocp-Apim-Subscription-Key': subscription_key,
+    }
+    # Request parameters.
+    params = {
+        'returnFaceId': 'true',
+        'returnFaceLandmarks': 'false',
+        'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise',
+    }
+    # Body. The URL of a JPEG image to analyze.
+    body = {
+        'url': url}
+    # Execute the REST API call and get the response.
+    response = requests.request('POST', uri_base + '/face/v1.0/detect', json=body, data=None, headers=headers,
+                                params=params)
+    parsed = json.loads(response.text)
+    jsonpart = json.loads(json.dumps(parsed, sort_keys=True, indent=2))
+    line_bot_api.reply_message(token,TextSendMessage(text=jsonpart[0]['faceAttributes']['age']))
 
 # Other Message Type
-@handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
+@handler.add(MessageEvent, message=(ImageMessage))
 def handle_content_message(event):
     if isinstance(event.message, ImageMessage):
         ext = 'jpg'
@@ -607,12 +627,9 @@ def handle_content_message(event):
     dist_path = tempfile_path + '.' + ext
     dist_name = os.path.basename(dist_path)
     os.rename(tempfile_path, dist_path)
+    faceapi(event.reply_token,request.host_url + os.path.join('static', 'tmp', dist_name))
+    
 
-    line_bot_api.reply_message(
-        event.reply_token, [
-            TextSendMessage(text='Save content.'),
-            TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
-        ])
 
 
 @handler.add(UnfollowEvent)
@@ -666,7 +683,7 @@ def handle_beacon(event):
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    #make_static_tmp_dir()
+    make_static_tmp_dir()
     app.run(host='0.0.0.0', port=port)
 
 

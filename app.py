@@ -582,9 +582,32 @@ def handle_text_message(event):
 
 
 
+def faceapi(token,url):
+    line_bot_api.reply_message(token,TextSendMessage(text=url))
 
+# Other Message Type
+@handler.add(MessageEvent, message=(ImageMessage))
+def handle_content_message(event):
+    if isinstance(event.message, ImageMessage):
+        ext = 'jpg'
+    elif isinstance(event.message, VideoMessage):
+        ext = 'mp4'
+    elif isinstance(event.message, AudioMessage):
+        ext = 'm4a'
+    else:
+        return
 
+    message_content = line_bot_api.get_message_content(event.message.id)
+    with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
+        for chunk in message_content.iter_content():
+            tf.write(chunk)
+        tempfile_path = tf.name
 
+    dist_path = tempfile_path + '.' + ext
+    dist_name = os.path.basename(dist_path)
+    os.rename(tempfile_path, dist_path)
+    url = request.host_url + os.path.join('static', 'tmp', dist_name)
+    faceapi(event.reply_token,url)
 
 
 @handler.add(UnfollowEvent)
@@ -638,7 +661,7 @@ def handle_beacon(event):
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    #make_static_tmp_dir()
+    make_static_tmp_dir()
     app.run(host='0.0.0.0', port=port)
 
 

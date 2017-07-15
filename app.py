@@ -375,7 +375,7 @@ def stalkInstagram(token,text):
         if err.code == 400:
             line_bot_api.reply_message(token,TextSendMessage(text='user not found'))
 def methodForHelp(token):
-        line_bot_api.reply_message(token,TextSendMessage(text='/stalk /video /image /bukalapak /weather /osu /about\n\nfor more information type /help <command name>\nex:/help osu'))
+        line_bot_api.reply_message(token,TextSendMessage(text='/text /stalk /video /image /bukalapak /weather /osu /about\n\nfor more information type /help <command name>\nex:/help osu'))
 def methodForHelpVideo(token):
         line_bot_api.reply_message(token,TextSendMessage(text='share or search youtube video and break the limit you can share video more than 5 minutes\n\nexample 1:\n/video https://www.youtube.com/watch?v=Vsc8uGxTlFQ\n\nexample 2:/video hatsune miku\n\nnow support to share video from twitch and vimeo\nex:https://www.twitch.tv/videos/156691454'))
 def methodForHelpBukalapak(token):
@@ -391,6 +391,8 @@ def methodForHelpImage(token):
         text='search any image in the internet powered by Bing Microsoft Azure\nexample: /image <search>\n(/image hatsune miku)'))
 def methodForHelpWeather(token):
     line_bot_api.reply_message(token, TextSendMessage(text='weather forecast\n\nex:/weather jakarta'))
+def methodForHelpText(token):
+    line_bot_api.reply_message(token,TextSendMessage(text='Natural Language Processing algorithm\n\nexample:\n/text i really love you'))
 def methodForHelpStalk(token):
         line_bot_api.reply_message(token,TextSendMessage(text='stalk your instagram friends\n/stalk <username>\nex:/stakl yingtze'))
 def priceCurrency(text):
@@ -538,6 +540,8 @@ def handle_text_message(event):
             methodForHelpBukalapak(token)
         if text.startswith('/help image'):
             methodForHelpImage(token)
+        if text.startswith('/help text'):
+            methodForHelpText(token)
         if text.startswith('/help osu'):
             methodForHelpOsu(token)
         if text.startswith('/help weather'):

@@ -577,7 +577,7 @@ def handle_text_message(event):
         if text.startswith('/alkitab'):
             kitab = re.search(r'/alkitab (.*?) ', text + ';', re.M | re.I)
             pasal = re.search(r'/akitab ' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
-            line_bot_api.reply_message(token,TextSendMessage(text=kitab))
+            line_bot_api.reply_message(token,TextSendMessage(text=kitab.group(1)))
 
 
 

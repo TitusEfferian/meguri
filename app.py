@@ -589,8 +589,8 @@ def handle_text_message(event):
             pasal = re.search(r'/alkitab ' + kitab.group(1) + ' (.*?):(.*)', text, re.M | re.I)
             #line_bot_api.reply_message(token,TextSendMessage(text=kitab.group(1)+' '+pasal.group(1)+':'+pasal.group(2)))
             ayat = int(pasal.group(2))
-            pasalNext = pasal.group(1)
-            kitabNext = kitab.group(1)
+            pasalNext = str(pasal.group(1))
+            kitabNext = str(kitab.group(1))
             alkitab(kitab.group(1).title(),pasal.group(1),pasal.group(2),token)
         if 'alkitabNext' in text:
             kitab = kitabNext.title()

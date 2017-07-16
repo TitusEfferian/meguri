@@ -502,8 +502,9 @@ def alkitab(kitab,pasal,ayat,token):
 
     searchObj = re.search(r'<a class="nomor-ayat" href="'+url+'">\r\n\t\t\t'+ayat+'.\r\n\t\t\t</a>\r\n\t\t\t(.*?)</p>', content, re.M | re.I)
     confirm_template = ConfirmTemplate(text=' ', actions=[
-        PostbackTemplateAction(label='ping', data='ping'),
-        PostbackTemplateAction(label='ping', data='ping'),
+        MessageTemplateAction(label='Next', text='alkitabNext'),
+        MessageTemplateAction(label='Prev', text='alkitabPrev'),
+
     ])
     line_bot_api.reply_message(token,[TextSendMessage(text=kitab+' '+pasal+':'+ayat+'\n\n'+searchObj.group(1)),TemplateSendMessage(
         alt_text='Confirm alt text', template=confirm_template)])
@@ -515,6 +516,7 @@ def handle_text_message(event):
 
 
     if 'bot leave' not in event.message.text.lower():
+        ayat = 1
         if text.startswith('/ctb'):
             searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
             searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
@@ -584,7 +586,10 @@ def handle_text_message(event):
             kitab = re.search(r'/alkitab (.*?) ', text + ';', re.M | re.I)
             pasal = re.search(r'/alkitab ' + kitab.group(1) + ' (.*?):(.*)', text, re.M | re.I)
             #line_bot_api.reply_message(token,TextSendMessage(text=kitab.group(1)+' '+pasal.group(1)+':'+pasal.group(2)))
+            ayat = int(pasal.group(2))
             alkitab(kitab.group(1).title(),pasal.group(1),pasal.group(2),token)
+        if 'alkitabNext' in text:
+            alkitab(kitab.group(1).title(), pasal.group(1), str(ayat+1), token)
 
 
 

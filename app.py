@@ -517,6 +517,8 @@ def handle_text_message(event):
 
     if 'bot leave' not in event.message.text.lower():
         ayat = 1
+        pasalNext = 'null'
+        kitabNext = 'null'
         if text.startswith('/ctb'):
             searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
             searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
@@ -587,10 +589,14 @@ def handle_text_message(event):
             pasal = re.search(r'/alkitab ' + kitab.group(1) + ' (.*?):(.*)', text, re.M | re.I)
             #line_bot_api.reply_message(token,TextSendMessage(text=kitab.group(1)+' '+pasal.group(1)+':'+pasal.group(2)))
             ayat = int(pasal.group(2))
+            pasalNext = pasal.group(1)
+            kitabNext = kitab.group(1)
             alkitab(kitab.group(1).title(),pasal.group(1),pasal.group(2),token)
         if 'alkitabNext' in text:
-            #alkitab(kitab.group(1).title(), pasal.group(1), str(ayat+1), token)
-            line_bot_api.reply_message(token,TextSendMessage(text=str(ayat+1)))
+            kitab = kitabNext.title()
+            pasal = pasalNext
+            alkitab(kitab, pasal, str(ayat+1), token)
+            #line_bot_api.reply_message(token,TextSendMessage(text=str(ayat+1)))
 
 
 

@@ -502,8 +502,8 @@ def alkitab(kitab,pasal,ayat,token):
 
     searchObj = re.search(r'<a class="nomor-ayat" href="'+url+'">\r\n\t\t\t'+ayat+'.\r\n\t\t\t</a>\r\n\t\t\t(.*?)</p>', content, re.M | re.I)
     confirm_template = ConfirmTemplate(text=' ', actions=[
-        MessageTemplateAction(label='Next', text='Yes!'),
-        MessageTemplateAction(label='Prev', text='No!'),
+        PostbackTemplateAction(label='ping', data='ping'),
+        PostbackTemplateAction(label='ping', data='ping'),
     ])
     line_bot_api.reply_message(token,[TextSendMessage(text=kitab+' '+pasal+':'+ayat+'\n\n'+searchObj.group(1)),TemplateSendMessage(
         alt_text='Confirm alt text', template=confirm_template)])

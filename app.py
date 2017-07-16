@@ -501,7 +501,13 @@ def alkitab(kitab,pasal,ayat,token):
     content = f.read().decode("utf-8")
 
     searchObj = re.search(r'<a class="nomor-ayat" href="'+url+'">\r\n\t\t\t'+ayat+'.\r\n\t\t\t</a>\r\n\t\t\t(.*?)</p>', content, re.M | re.I)
-    line_bot_api.reply_message(token,TextSendMessage(text=kitab+' '+pasal+':'+ayat+'\n\n'+searchObj.group(1)))
+    confirm_template = ConfirmTemplate(text='Do it?', actions=[
+        MessageTemplateAction(label='Yes', text='Yes!'),
+        MessageTemplateAction(label='No', text='No!'),
+    ])
+    line_bot_api.reply_message(token,[TextSendMessage(text=kitab+' '+pasal+':'+ayat+'\n\n'+searchObj.group(1)),TemplateSendMessage(
+        alt_text='Confirm alt text', template=confirm_template)])
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text

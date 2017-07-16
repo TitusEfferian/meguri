@@ -592,11 +592,7 @@ def handle_text_message(event):
             pasalNext = str(pasal.group(1))
             kitabNext = str(kitab.group(1))
             alkitab(kitab.group(1).title(),pasal.group(1),pasal.group(2),token)
-        if 'alkitabNext' in text:
-            kitab = kitabNext.title()
-            pasal = pasalNext
-            #alkitab(kitab, pasal, str(ayat+1), token)
-            line_bot_api.reply_message(token,TextSendMessage(text=kitab+pasal+str(ayat+1)))
+        
 
 
 

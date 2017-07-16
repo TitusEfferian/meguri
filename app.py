@@ -492,7 +492,16 @@ def textanalytics(token,text):
             line_bot_api.reply_message(token,TextSendMessage(text='dont know'))
 
 
+def alkitab(kitab,pasal,ayat,token):
+    import urllib.request
 
+    opener = urllib.request.FancyURLopener({})
+    url = 'http://alkitab.me/'+kitab+'/'+pasal+'/'+ayat
+    f = opener.open(url)
+    content = f.read().decode("utf-8")
+
+    searchObj = re.search(r'<a class="nomor-ayat" href="'+url+'">\r\n\t\t\t'+ayat+'.\r\n\t\t\t</a>\r\n\t\t\t(.*?)</p>', content, re.M | re.I)
+    line_bot_api.reply_message(token,TextSendMessage(text=kitab+' '+pasal+':'+ayat+'\n'+searchObj.group(1)))
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
@@ -565,6 +574,11 @@ def handle_text_message(event):
         if text.startswith('/text'):
             searchObj = re.search(r'/text (.*?);', text + ';', re.M | re.I)
             textanalytics(token,searchObj.group(1))
+        if text.startswith('/alkitab'):
+            kitab = re.search(r'/alkitab (.*?) ', text + ';', re.M | re.I)
+            pasal = re.search(r'/akitab ' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
+            line_bot_api.reply_message(token,TextSendMessage(text=kitab))
+
 
 
 

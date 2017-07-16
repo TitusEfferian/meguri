@@ -576,8 +576,8 @@ def handle_text_message(event):
             textanalytics(token,searchObj.group(1))
         if text.startswith('/alkitab'):
             kitab = re.search(r'/alkitab (.*?) ', text + ';', re.M | re.I)
-            pasal = re.search(r'/alkitab ' + kitab.group(1) + ' (.*?):', text + ';', re.M | re.I)
-            line_bot_api.reply_message(token,TextSendMessage(text=pasal.group(1)))
+            pasal = re.search(r'/alkitab ' + kitab.group(1) + ' (.*?):(.*)', text, re.M | re.I)
+            line_bot_api.reply_message(token,TextSendMessage(text=kitab.group(1)+' '+pasal.group(1)+':'+pasal.group(2)))
 
 
 

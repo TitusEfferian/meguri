@@ -513,12 +513,13 @@ def alkitab(kitab,pasal,ayat,token):
 def handle_text_message(event):
     text = event.message.text
     token = event.reply_token
+    ayat = 1
+    pasalNext = 'null'
+    kitabNext = 'null'
 
 
     if 'bot leave' not in event.message.text.lower():
-        ayat = 1
-        pasalNext = 'null'
-        kitabNext = 'null'
+
         if text.startswith('/ctb'):
             searchObjForCommand = re.search(r'/(.*?) ', text, re.M | re.I)
             searchObj = re.search(r'/' + searchObjForCommand.group(1) + ' (.*?);', text + ';', re.M | re.I)
@@ -592,7 +593,9 @@ def handle_text_message(event):
             pasalNext = str(pasal.group(1))
             kitabNext = str(kitab.group(1))
             alkitab(kitab.group(1).title(),pasal.group(1),pasal.group(2),token)
-        
+        if 'alkitabNext' in text:
+            line_bot_api.reply_message(token,TextSendMessage(text=pasalNext))
+
 
 
 
